@@ -1,14 +1,40 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Worldwide News</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
-  <!-- <script src="main.js"></script> -->
+  <script src="main.js"></script>
 </head>
+
 <body>
-  <h1>Welcome to Worldwide News!</h1>
+  <header>
+    <h1>Worldwide News</h1>
+  </header>
+  <main>
+    <h2>Welcome to Worldwide News!</h2>
+    <form onsubmit="event.preventDefault()">
+      <div class="form-group" title="Select the news source">
+        <label for="source">Source:</label>
+        <select name="source" id="source">
+        </select>
+      </div>
+      <div class="form-group" title="Select the page number">
+        <label for="page">Page:</label>
+        <input type="number" name="page" id="page">
+      </div>
+      <button id="submit" type="submit" title="Begin search">Go</button>
+    </form>
+
+    <div class="widgets-container" id="widgetsContainer">
+
+    </div>
+
+  </main>
+
 </body>
+
 </html>
