@@ -73,6 +73,15 @@ class NewsList {
 
 /** Gets search parameters and emits an event when a user clicks submit button */
 class SearchPanel {
+  constructor({ sources } = {}) {
+    this._sourceEl = document.getElementById('source');
+    this._initSourceOptions(this._sourceEl, sources);
+    this._pageEl = document.getElementById('page');
+    this._submitButton = document.getElementById('submit');
+    this._submitButton.addEventListener('click', this._onSubmitClick.bind(this));
+    this._submitClick = new EventEmitter();
+  }
+
   get page() {
     const page = +this._pageEl.value || 1;
     if (!Number.isInteger(page) || page < 1) {
@@ -87,15 +96,6 @@ class SearchPanel {
 
   get submitClick() {
     return this._submitClick;
-  }
-
-  constructor({ sources } = {}) {
-    this._sourceEl = document.getElementById('source');
-    this._initSourceOptions(this._sourceEl, sources);
-    this._pageEl = document.getElementById('page');
-    this._submitButton = document.getElementById('submit');
-    this._submitButton.addEventListener('click', this._onSubmitClick.bind(this));
-    this._submitClick = new EventEmitter();
   }
 
   dispose() {
