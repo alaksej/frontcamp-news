@@ -1,44 +1,26 @@
+const apiKey = 'd63e3d1d1622450aaf814fae749afce1';
+
+const sourcesConfig = new Map([
+  ['1', { displayName: 'Top headlines from BBC News', config: { action: 'topHeadlines', params: { sources: 'bbc-news' } } }],
+  ['2', { displayName: 'Articles about Bitcoin', config: { action: 'everything', params: { q: 'bitcoin' } } }],
+  ['3', { displayName: 'Top sports headlines', config: { action: 'topHeadlines', params: { category: 'sport' } } }],
+]);
+
 document.addEventListener('DOMContentLoaded', function () {
+  const sources = Array.from(sourcesConfig).map(source => ({ value: source[0], displayName: source[1].displayName })),
+    newsApi = new NewsAPI(apiKey),
+    searchPanel = new SearchPanel({ sources }),
+    newsList = new NewsList();
 
-  const baseUrl = 'https://newsapi.org/v2/';
-
-  const apiKey = 'd63e3d1d1622450aaf814fae749afce1';
-
-  const headers = new Headers({ 'x-api-key': apiKey });
-
-  const sources = [
-    { value: `${baseUrl}top-headlines?sources=bbc-news`, displayName: 'Top headlines from BBC News' },
-    { value: `${baseUrl}everything?q=bitcoin`, displayName: 'Articles about Bitcoin' },
-    { value: `${baseUrl}top-headlines?category=sport`, displayName: 'Top sports headlines' },
-  ];
-
-  function getNews(url, page = 1) {
-    url = `${url}&page=${page}`;
-    return fetch(url, { headers })
-      .then(response => {
-        const contentType = response.headers.get("content-type");
-        if (contentType && contentType.includes("application/json")) {
-          return response.json();
-        }
-        throw new TypeError("Oops, we haven't got JSON!");
-      })
-      .catch(error => console.log(error));
-  }
-
-
-  const searchPanel = new SearchPanel({ sources });
-  const newsList = new NewsList();
-
-  searchPanel.submitClick.subscribe(async ({ source: url, page }) => {
-    const result = await getNews(url, page);
+  searchPanel.submitClick.subscribe(async ({ source: sourceKey, page }) => {
+    const { action, params } = sourcesConfig.get(sourceKey).config;
+    const result = await newsApi[action]({ ...params, page });
     const articles = result.articles;
     if (articles && articles.length) {
       newsList.articles = articles;
     }
   });
-
 });
-
 
 class NewsList {
   constructor(articles) {
@@ -73,7 +55,7 @@ class NewsList {
 
 /** Gets search parameters and emits an event when a user clicks submit button */
 class SearchPanel {
-  constructor({ sources } = {}) {
+  constructor({ sources = [{ displayName: '', value: '' }] } = {}) {
     this._sourceEl = document.getElementById('source');
     this._initSourceOptions(this._sourceEl, sources);
     this._pageEl = document.getElementById('page');
@@ -108,15 +90,13 @@ class SearchPanel {
     }
 
     DOMHelper.removeAllChildren(this._sourceEl);
-    if (sources) {
-      sourceEl.append(...sources.map(source => this._createSourceOptionEl(source)));
-    }
+    sourceEl.append(...sources.map(({ displayName, value }) => this._createSourceOptionEl({ displayName, value })));
   }
 
-  _createSourceOptionEl(source) {
+  _createSourceOptionEl({ displayName, value }) {
     const option = document.createElement('option');
-    option.append(source.displayName);
-    option.value = source.value;
+    option.append(displayName);
+    option.value = value;
     return option;
   }
 
@@ -174,5 +154,53 @@ class DOMHelper {
     while (node.firstChild) {
       node.removeChild(node.firstChild);
     }
+  }
+}
+
+const host = 'https://newsapi.org';
+
+class NewsAPI {
+  constructor(apiKey) {
+    if (!apiKey) throw new Error('No API key specified');
+    this._apiKey = apiKey;
+  }
+
+  topHeadlines(params = { language: 'en' }) {
+    const url = this._buildUrl('/v2/top-headlines', params);
+    return this._getDataFromWeb(url, this._apiKey);
+  }
+
+  everything(params) {
+    const url = this._buildUrl('/v2/everything', params);
+    return this._getDataFromWeb(url, this._apiKey);
+  }
+
+  sources(params) {
+    const url = this._buildUrl('/v2/sources', params);
+    return this._getDataFromWeb(url, this._apiKey);
+  }
+
+  _buildUrl(endpoint, params) {
+    const queryParams = Object.keys(params).map(key => `${key}=${params[key]}`).join('&');
+    const baseURL = `${host}${endpoint}`;
+    return queryParams ? `${baseURL}?${queryParams}` : baseURL;
+  }
+
+  async _getDataFromWeb(url, apiKey) {
+    const headers = apiKey ? new Headers({ 'x-api-key': apiKey }) : {};
+    const response = await fetch(url, { headers });
+    const body = await response.json();
+    if (body.status === 'error') {
+      throw new NewsAPIError(body);
+    }
+    return body;
+  }
+}
+
+class NewsAPIError extends Error {
+  constructor(err) {
+    super();
+    this.name = `NewsAPIError: ${err.code}`;
+    this.message = err.message;
   }
 }
