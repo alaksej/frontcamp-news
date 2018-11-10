@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         throw new TypeError("Oops, we haven't got JSON!");
       })
-      .catch(error => (error));
+      .catch(error => console.log(error));
   }
 
   const sourceEl = document.getElementById('source');
