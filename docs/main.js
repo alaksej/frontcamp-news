@@ -26,23 +26,50 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 
-  const widgetsContainer = document.getElementById('widgetsContainer');
-
   const searchPanel = new SearchPanel({ sources });
+  const newsList = new NewsList();
 
   searchPanel.submitClick.subscribe(async ({ source: url, page }) => {
     const result = await getNews(url, page);
-    const widgetEls = result.articles.map(n => createWidgetEl(n));
-    widgetsContainer.append(...widgetEls);
+    const articles = result.articles;
+    if (articles && articles.length) {
+      newsList.articles = articles;
+    }
   });
 
-  function createWidgetEl(article) {
+});
+
+
+class NewsList {
+  constructor(articles) {
+    this._newsListContainer = document.getElementById('newsListContainer');
+    this.clear();
+    this.add(articles);
+  }
+
+  set articles(articles) {
+    this.clear();
+    this.add(articles);
+  }
+
+  clear() {
+    DOMHelper.removeAllChildren(this._newsListContainer);
+  }
+
+  add(articles) {
+    if (isIterable(articles)) {
+      this._newsListContainer.append(...Array.from(articles).map(article => this._createWidgetEl(article)));
+    }
+  }
+
+  _createWidgetEl(article) {
     const title = document.createElement('a');
     title.append(article.title);
     title.setAttribute('href', article.url);
     return title;
   }
-});
+}
+
 
 /** Gets search parameters and emits an event when a user clicks submit button */
 class SearchPanel {
@@ -136,6 +163,10 @@ class Subscription {
 
 function isFunction(x) {
   return typeof x === 'function';
+}
+
+function isIterable(obj) {
+  return obj != null && typeof obj[Symbol.iterator] === 'function';
 }
 
 class DOMHelper {
