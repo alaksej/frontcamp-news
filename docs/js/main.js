@@ -38,7 +38,7 @@ class App {
       if (articles && articles.length) {
         this._newsList.articles = articles;
       } else {
-        this._newsList.text = `Nothing's found. Try changing the channel of page number.`;
+        this._newsList.text = `Nothing's found. Try changing the channel or page number.`;
       }
     }
 
