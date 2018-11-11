@@ -6,6 +6,8 @@ const sourcesConfig = new Map([
   ['3', { displayName: 'Top sports headlines', config: { action: 'topHeadlines', params: { category: 'sport' } } }],
 ]);
 
+const genericNewsLogoPath = './images/generic_news_logo.png';
+
 document.addEventListener('DOMContentLoaded', function () {
   const sources = Array.from(sourcesConfig).map(source => ({ value: source[0], displayName: source[1].displayName })),
     newsApi = new NewsAPI(apiKey),
@@ -25,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
 class NewsList {
   constructor(articles) {
     this._newsListContainer = document.getElementById('newsListContainer');
-    this.clear();
+    // this.clear();
     this.add(articles);
   }
 
@@ -40,15 +42,61 @@ class NewsList {
 
   add(articles) {
     if (isIterable(articles)) {
-      this._newsListContainer.append(...Array.from(articles).map(article => this._createWidgetEl(article)));
+      this._newsListContainer.append(...Array.from(articles).map(article => this._createCardEl(article)));
     }
   }
 
-  _createWidgetEl(article) {
-    const title = document.createElement('a');
-    title.append(article.title);
-    title.setAttribute('href', article.url);
-    return title;
+  _createCardEl(article) {
+    const cardSource = document.createElement('p');
+    cardSource.classList.add('card-source');
+    cardSource.setAttribute('title', article.source.name);
+    cardSource.append(article.source.name);
+
+    const dateTime = document.createElement('time');
+    dateTime.setAttribute('title', (new Date(article.publishedAt).toLocaleString()));
+    dateTime.append(new Date(article.publishedAt).toLocaleDateString());
+
+    const cardDate = document.createElement('p');
+    cardDate.classList.add('card-date');
+    cardDate.append(dateTime);
+
+    const cardFooter = document.createElement('div');
+    cardFooter.classList.add('card-footer');
+    cardFooter.append(cardDate, cardSource);
+
+    const cardDescription = document.createElement('p');
+    cardDescription.classList.add('card-description');
+    cardDescription.setAttribute('title', article.description || '');
+    cardDescription.append(article.description || '');
+
+    const cardTitle = document.createElement('h3');
+    cardTitle.classList.add('card-title');
+    cardTitle.setAttribute('title', article.title);
+    cardTitle.append(article.title);
+
+    const cardText = document.createElement('div');
+    cardText.classList.add('card-text');
+    cardText.append(cardTitle, cardDescription, cardFooter);
+
+    const img = document.createElement('img');
+    img.setAttribute('src', article.urlToImage || genericNewsLogoPath);
+    img.setAttribute('alt', article.title);
+
+    const cardImage = document.createElement('div');
+    cardImage.classList.add('card-image');
+    cardImage.append(img);
+
+    const cardLink = document.createElement('a');
+    cardLink.classList.add('card-link');
+    cardLink.setAttribute('href', article.url);
+    cardLink.setAttribute('target', '_blank');
+    cardLink.append(cardImage, cardText);
+
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.append(cardLink);
+
+    return card;
   }
 }
 
