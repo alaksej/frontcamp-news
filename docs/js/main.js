@@ -1,4 +1,4 @@
-import { apiKey, sourcesConfig, genericNewsLogoPath} from './config.js';
+import { apiKey, sourcesConfig, genericNewsLogoPath } from './config.js';
 import { EventEmitter } from './event-emitter.js';
 import { DOMHelper, isIterable } from './utls.js';
 import { NewsAPI } from './news-api.js';
@@ -10,14 +10,29 @@ document.addEventListener('DOMContentLoaded', () => {
     searchPanel = new SearchPanel({ sources }),
     newsList = new NewsList();
 
+  newsList.text = `Click 'Go' to get some news!`;
+
   searchPanel.submitClick.subscribe(async ({ source: sourceKey, page }) => {
     searchPanel.disableSubmit();
+    newsList.text = 'Loading...';
     const { action, params } = sourcesConfig.get(sourceKey).config;
-    const result = await newsApi[action]({ ...params, page });
-    const articles = result.articles;
-    if (articles && articles.length) {
-      newsList.articles = articles;
+
+    let result;
+    try {
+      result = await newsApi[action]({ ...params, page });
+    } catch {
+      newsList.text = 'Oops, something went wrong. Maybe the page number is too big?';
     }
+
+    if (result) {
+      const articles = result.articles;
+      if (articles && articles.length) {
+        newsList.articles = articles;
+      } else {
+        newsList.text = `Nothing's found. Try changing the channel of page number.`;
+      }
+    }
+
     searchPanel.enableSubmit();
   });
 });
@@ -28,6 +43,11 @@ class NewsList {
     this._newsListContainer = document.getElementById('newsListContainer');
     this.clear();
     this.add(articles);
+  }
+
+  set text(text) {
+    this.clear();
+    this._newsListContainer.append(text);
   }
 
   set articles(articles) {
