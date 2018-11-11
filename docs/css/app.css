@@ -37,19 +37,11 @@ body {
 }
 
 main {
-  margin: 0 10px;
   padding-bottom: 30px;
 }
 
-.content-wrapper {
-  margin: 0 auto;
-  max-width: 900px;
-}
-
-@media only screen and (max-width: 920px) {
-  .content-wrapper {
-    max-width: 100%;
-  }
+main .content-wrapper {
+  padding-top: 20px;
 }
 
 .footer {
@@ -62,9 +54,6 @@ main {
   justify-content: flex-end;
 }
 
-.welcome-title {
-  margin-top: 20px;
-}
 
 .search-panel {
   padding: 20px;
