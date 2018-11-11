@@ -1,12 +1,7 @@
-const apiKey = 'd63e3d1d1622450aaf814fae749afce1';
-
-const sourcesConfig = new Map([
-  ['1', { displayName: 'Top headlines from BBC News', config: { action: 'topHeadlines', params: { sources: 'bbc-news' } } }],
-  ['2', { displayName: 'Articles about Bitcoin', config: { action: 'everything', params: { q: 'bitcoin' } } }],
-  ['3', { displayName: 'Top sports headlines', config: { action: 'topHeadlines', params: { category: 'sport' } } }],
-]);
-
-const genericNewsLogoPath = './images/generic_news_logo.png';
+import { apiKey, sourcesConfig, genericNewsLogoPath} from './config.js';
+import { EventEmitter } from './event-emitter.js';
+import { DOMHelper, isIterable } from './utls.js';
+import { NewsAPI } from './news-api.js';
 
 /** Initialize the application here */
 document.addEventListener('DOMContentLoaded', () => {
@@ -153,104 +148,5 @@ class SearchPanel {
     const source = this.source;
     const page = this.page;
     this.submitClick.emit({ source, page });
-  }
-}
-
-/** Provides a layer of abstraction from the DOM events. */
-class EventEmitter {
-  constructor() {
-    this._subscribers = [];
-  }
-
-  emit(value) {
-    this._subscribers.forEach(subscriber => subscriber(value));
-  }
-
-  /** The subscriber is invoked when the event is triggered. Returns Subscription to be able to unsubscribe from the event. */
-  subscribe(subscriber) {
-    if (!isFunction(subscriber)) {
-      throw new Error('Only functions are allowed as subscribers.');
-    }
-    const subscriptionIdx = this._subscribers.length;
-    this._subscribers = [...this._subscribers, subscriber];
-    const sink = new Subscription(() => this._subscribers = this._subscribers.filter((v, i) => i !== subscriptionIdx));
-    return sink;
-  }
-}
-
-/** Allows to unsubscribe from the event */
-class Subscription {
-  constructor(unsubscribeFn) {
-    this._unsubscribeFn = unsubscribeFn;
-  }
-  unsubscribe() {
-    if (isFunction(this._unsubscribeFn)) {
-      this._unsubscribeFn();
-    }
-  }
-}
-
-function isFunction(x) {
-  return typeof x === 'function';
-}
-
-function isIterable(obj) {
-  return obj != null && typeof obj[Symbol.iterator] === 'function';
-}
-
-class DOMHelper {
-  static removeAllChildren(node) {
-    while (node.firstChild) {
-      node.removeChild(node.firstChild);
-    }
-  }
-}
-
-const host = 'https://newsapi.org';
-
-/** Fetches the news data from the web */
-class NewsAPI {
-  constructor(apiKey) {
-    if (!apiKey) throw new Error('No API key specified');
-    this._apiKey = apiKey;
-  }
-
-  topHeadlines(params = { language: 'en' }) {
-    const url = this._buildUrl('/v2/top-headlines', params);
-    return this._getDataFromWeb(url, this._apiKey);
-  }
-
-  everything(params) {
-    const url = this._buildUrl('/v2/everything', params);
-    return this._getDataFromWeb(url, this._apiKey);
-  }
-
-  sources(params) {
-    const url = this._buildUrl('/v2/sources', params);
-    return this._getDataFromWeb(url, this._apiKey);
-  }
-
-  _buildUrl(endpoint, params) {
-    const queryParams = Object.keys(params).map(key => `${key}=${params[key]}`).join('&');
-    const baseURL = `${host}${endpoint}`;
-    return queryParams ? `${baseURL}?${queryParams}` : baseURL;
-  }
-
-  async _getDataFromWeb(url, apiKey) {
-    const headers = apiKey ? new Headers({ 'x-api-key': apiKey }) : {};
-    const response = await fetch(url, { headers });
-    const body = await response.json();
-    if (body.status === 'error') {
-      throw new NewsAPIError(body);
-    }
-    return body;
-  }
-}
-
-class NewsAPIError extends Error {
-  constructor(err) {
-    super();
-    this.name = `NewsAPIError: ${err.code}`;
-    this.message = err.message;
   }
 }
