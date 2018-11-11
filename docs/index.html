@@ -6,35 +6,42 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Worldwide News</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="app.css" />
   <script type="text/javascript" src="main.js"></script>
 </head>
 
 <body>
-  <header>
+  <header class="header">
     <h1>Worldwide News</h1>
   </header>
   <main>
-    <h2>Welcome to Worldwide News!</h2>
-    <form onsubmit="event.preventDefault()">
-      <div class="form-group" title="Select the news source">
-        <label for="source">Source:</label>
-        <select name="source" id="source">
-        </select>
-      </div>
-      <div class="form-group" title="Select the page number">
-        <label for="page">Page:</label>
-        <input type="number" name="page" id="page">
-      </div>
-      <button id="submit" type="submit" title="Begin search">Go</button>
-    </form>
-
-    <div class="widgets-container" id="newsListContainer">
-
+    <div class="main-container">
+      <h2 class="welcome-title">Welcome to Worldwide News!</h2>
+      <section class="search-panel">
+        <form onsubmit="event.preventDefault()">
+          <div class="form-group row" title="Select the news source">
+            <label class="col-3" for="source">Source:</label>
+            <div class="col-5">
+              <select class="form-control" name="source" id="source"> </select>
+            </div>
+          </div>
+          <div class="form-group row" title="Enter the page number">
+            <label class="col-3" for="page">Page:</label>
+            <div class="col-5">
+              <input class="form-control" type="number" name="page" id="page" value="1" placeholder="Enter the page number">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-8 align-right">
+              <button class="btn btn-primary" id="submit" type="submit" title="Begin search">Go</button>
+            </div>
+          </div>
+        </form>
+      </section>
+      <section class="news-list" id="newsListContainer"></section>
     </div>
-
   </main>
-
 </body>
 
 </html>
