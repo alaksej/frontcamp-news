@@ -11,12 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
     newsList = new NewsList();
 
   searchPanel.submitClick.subscribe(async ({ source: sourceKey, page }) => {
+    searchPanel.disableSubmit();
     const { action, params } = sourcesConfig.get(sourceKey).config;
     const result = await newsApi[action]({ ...params, page });
     const articles = result.articles;
     if (articles && articles.length) {
       newsList.articles = articles;
     }
+    searchPanel.enableSubmit();
   });
 });
 
@@ -126,6 +128,14 @@ class SearchPanel {
 
   dispose() {
     this._pageEl.removeEventListener('click', this._onSubmitClick.bind(this));
+  }
+
+  disableSubmit() {
+    this._submitButton.setAttribute('disabled', '');
+  }
+
+  enableSubmit() {
+    this._submitButton.removeAttribute('disabled');
   }
 
   _initSourceOptions(sourceEl, sources) {

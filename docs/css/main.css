@@ -137,6 +137,11 @@ h1, h2, h3 {
   font-weight: 500;
 }
 
+.btn[disabled], .btn[disabled]:hover {
+  background-color: var(--color-gray-2);
+  cursor: default;
+}
+
 .btn-primary {
   color: #fff;
   background-color: var(--color-primary-0);
