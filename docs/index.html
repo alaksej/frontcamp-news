@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Worldwide News - News headlines</title> 
+  <title>Worldwide News - News headlines</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="app.css" />
@@ -14,11 +14,13 @@
 <body>
   <div class="container">
     <header class="header">
-      <h1>Worldwide News</h1>
-      <h4 class="subtitle">News headlines from over 30,000 sources</h4>
+      <div class="content-wrapper">
+        <h1>Worldwide News</h1>
+        <h4 class="subtitle">News headlines from over 30,000 sources</h4>
+      </div>
     </header>
     <main>
-      <div class="main-content">
+      <div class="content-wrapper">
         <h2 class="welcome-title">Welcome to Worldwide News!</h2>
         <section class="search-panel">
           <form onsubmit="event.preventDefault()">
@@ -46,7 +48,9 @@
     </main>
 
     <footer class="footer">
-      <a href="https://newsapi.org" class="attribution">Powered by News API</a>
+      <div class="content-wrapper">
+        <a href="https://newsapi.org" class="attribution">Powered by News API</a>
+      </div>
     </footer>
   </div>
 </body>

@@ -24,13 +24,13 @@ body {
 }
 
 .header h1 {
-  padding: 10px 30px 0px 30px;
+  padding: 10px 10px 0px 0px;
   margin: 0;
   color: white;
 }
 
 .header .subtitle {
-  padding: 0 45px 10px;
+  padding: 0 25px 10px;
   font-style: italic;
   font-weight: 400;
   font-size: 14px;
@@ -41,13 +41,13 @@ main {
   padding-bottom: 30px;
 }
 
-.main-content {
+.content-wrapper {
   margin: 0 auto;
   max-width: 900px;
 }
 
 @media only screen and (max-width: 920px) {
-  .main-content {
+  .content-wrapper {
     max-width: 100%;
   }
 }
