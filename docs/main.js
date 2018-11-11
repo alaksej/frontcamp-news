@@ -8,7 +8,8 @@ const sourcesConfig = new Map([
 
 const genericNewsLogoPath = './images/generic_news_logo.png';
 
-document.addEventListener('DOMContentLoaded', function () {
+/** Initialize the application here */
+document.addEventListener('DOMContentLoaded', () => {
   const sources = Array.from(sourcesConfig).map(source => ({ value: source[0], displayName: source[1].displayName })),
     newsApi = new NewsAPI(apiKey),
     searchPanel = new SearchPanel({ sources }),
@@ -24,10 +25,11 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+/** Displays the list of the news articles */
 class NewsList {
   constructor(articles) {
     this._newsListContainer = document.getElementById('newsListContainer');
-    // this.clear();
+    this.clear();
     this.add(articles);
   }
 
@@ -99,7 +101,6 @@ class NewsList {
     return card;
   }
 }
-
 
 /** Gets search parameters and emits an event when a user clicks submit button */
 class SearchPanel {
@@ -207,6 +208,7 @@ class DOMHelper {
 
 const host = 'https://newsapi.org';
 
+/** Fetches the news data from the web */
 class NewsAPI {
   constructor(apiKey) {
     if (!apiKey) throw new Error('No API key specified');
