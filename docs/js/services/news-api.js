@@ -1,4 +1,3 @@
-
 const host = 'https://newsapi.org';
 
 /** Fetches the news data from the web */
@@ -29,14 +28,16 @@ export class NewsAPI {
     return queryParams ? `${baseURL}?${queryParams}` : baseURL;
   }
 
-  async _getDataFromWeb(url, apiKey) {
+  _getDataFromWeb(url, apiKey) {
     const headers = apiKey ? new Headers({ 'x-api-key': apiKey }) : {};
-    const response = await fetch(url, { headers });
-    const body = await response.json();
-    if (body.status === 'error') {
-      throw new NewsAPIError(body);
-    }
-    return body;
+    return fetch(url, { headers })
+      .then(response => response.json())
+      .then(body => {
+        if (body.status === 'error') {
+          throw new NewsAPIError(body);
+        }
+        return body;
+      });
   }
 }
 
