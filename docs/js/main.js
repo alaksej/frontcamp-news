@@ -70,62 +70,31 @@ class NewsList {
 
   add(articles) {
     if (isIterable(articles)) {
-      this._newsListContainer.append(...Array.from(articles).map(article => this._createCardEl(article)));
+      this._newsListContainer.innerHTML = Array.from(articles).map(article => this._createCardEl(article)).join('');
     }
   }
 
   _createCardEl(article) {
-    const cardSource = document.createElement('p');
-    cardSource.classList.add('card-source');
-    cardSource.setAttribute('title', article.source.name);
-    cardSource.append(article.source.name);
-
-    const dateTime = document.createElement('time');
-    dateTime.setAttribute('title', (new Date(article.publishedAt).toLocaleString()));
-    dateTime.append(new Date(article.publishedAt).toLocaleDateString());
-
-    const cardDate = document.createElement('p');
-    cardDate.classList.add('card-date');
-    cardDate.append(dateTime);
-
-    const cardFooter = document.createElement('div');
-    cardFooter.classList.add('card-footer');
-    cardFooter.append(cardDate, cardSource);
-
-    const cardDescription = document.createElement('p');
-    cardDescription.classList.add('card-description');
-    cardDescription.setAttribute('title', article.description || '');
-    cardDescription.append(article.description || '');
-
-    const cardTitle = document.createElement('h3');
-    cardTitle.classList.add('card-title');
-    cardTitle.setAttribute('title', article.title);
-    cardTitle.append(article.title);
-
-    const cardText = document.createElement('div');
-    cardText.classList.add('card-text');
-    cardText.append(cardTitle, cardDescription, cardFooter);
-
-    const img = document.createElement('img');
-    img.setAttribute('src', article.urlToImage || genericNewsLogoPath);
-    img.setAttribute('alt', article.title);
-
-    const cardImage = document.createElement('div');
-    cardImage.classList.add('card-image');
-    cardImage.append(img);
-
-    const cardLink = document.createElement('a');
-    cardLink.classList.add('card-link');
-    cardLink.setAttribute('href', article.url);
-    cardLink.setAttribute('target', '_blank');
-    cardLink.append(cardImage, cardText);
-
-    const card = document.createElement('div');
-    card.classList.add('card');
-    card.append(cardLink);
-
-    return card;
-  }
+    return `
+      <div class="card">
+        <a class="card-link" href="${article.url}" target="_blank">
+          <div class="card-image">
+            <img src="${article.urlToImage}" alt="${article.title}">
+          </div>
+          <div class="card-text">
+            <h3 class="card-title" title="${article.title}">${article.title}</h3>
+            <p class="card-description" title="${article.description}">${article.description}</p>
+            <div class="card-footer">
+              <p class="card-date">
+                <time title="${new Date(article.publishedAt).toLocaleString()}">${new Date(article.publishedAt).toLocaleDateString()}</time>
+              </p>
+              <p class="card-source" title="${article.source.name}">${article.source.name}</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    `;
+    }
 }
 
 /** Gets search parameters and emits an event when a user clicks submit button */
@@ -169,23 +138,18 @@ class SearchPanel {
 
   _initSourceOptions(sourceEl, sources) {
     if (!this._sourceEl) {
-      throw new Error('Unable to find he source element');
+      throw new Error('Unable to find the source element');
     }
 
     DOMHelper.removeAllChildren(this._sourceEl);
-    sourceEl.append(...sources.map(({ displayName, value }) => this._createSourceOptionEl({ displayName, value })));
+    sourceEl.innerHTML = sources.map(({ displayName, value }) => this._createOption({ displayName, value })).join('');
   }
 
-  _createSourceOptionEl({ displayName, value }) {
-    const option = document.createElement('option');
-    option.append(displayName);
-    option.value = value;
-    return option;
+  _createOption({ displayName, value }) {
+    return `<option value="${value}>${displayName}</option>`;
   }
 
   _onSubmitClick() {
-    const source = this.source;
-    const page = this.page;
-    this.submitClick.emit({ source, page });
+    this.submitClick.emit({ source: this.source, page: this.page });
   }
 }
