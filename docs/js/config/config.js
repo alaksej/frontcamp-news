@@ -11,7 +11,7 @@ export class SourcesConfig {
   }
 
   getSearchPanelOptions() {
-    return Array.from(this._sourcesConfig).map(source => ({ value: source[0], displayName: source[1].displayName }));
+    return Array.from(this._sourcesConfig, source => ({ value: source[0], displayName: source[1].displayName }));
   }
 
   getUrlConfig(sourceKey) {

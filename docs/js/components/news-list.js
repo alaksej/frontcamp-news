@@ -25,7 +25,7 @@ export class NewsList {
 
   add(articles) {
     if (isIterable(articles)) {
-      this._newsListContainer.innerHTML = Array.from(articles).map(article => this._createCardEl(article)).join('');
+      this._newsListContainer.innerHTML = Array.from(articles, article => this._createCardEl(article)).join('');
     }
   }
 
