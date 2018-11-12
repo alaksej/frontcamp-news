@@ -5,8 +5,7 @@ import { genericNewsLogoPath } from '../config/config.js';
 export class NewsList {
   constructor(articles) {
     this._newsListContainer = document.getElementById('newsListContainer');
-    this.clear();
-    this.add(articles);
+    this.articles = articles;
   }
 
   set text(text) {
