@@ -46,7 +46,7 @@ export class SearchPanel {
     }
 
     DOMHelper.removeAllChildren(sourceEl);
-    sourceEl.innerHTML = sources.map(({ displayName, value }) => this._createOption({ displayName, value })).join('');
+    sourceEl.innerHTML = sources.map(source => this._createOption(source)).join('');
   }
 
   _createOption({ displayName, value }) {
