@@ -1,0 +1,26 @@
+{
+  "name": "frontcamp-news",
+  "version": "1.0.0",
+  "description": "A training project for the 2018 FrontCamp Mentoring Program",
+  "main": "main.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "http-server ./docs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alaksej/frontcamp-news.git"
+  },
+  "author": "Aliaksei Yankou",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alaksej/frontcamp-news/issues"
+  },
+  "homepage": "https://github.com/alaksej/frontcamp-news#readme",
+  "dependencies": {
+    "http-server": "^0.11.1"
+  }
+}
