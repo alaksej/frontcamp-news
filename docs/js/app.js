@@ -15,15 +15,15 @@ export class App {
   }
 
   onSubmitClick({ source, page }) {
-    const { action, params } = this._sourcesConfig.getUrlConfig(source);
-    this.loadNews(action, { ...params, page });
+    const { endpoint, params } = this._sourcesConfig.getUrlConfig(source);
+    this.loadNews(endpoint, { ...params, page });
   }
 
-  loadNews(action, params) {
+  loadNews(endpoint, params) {
     this._searchPanel.disableSubmit();
     this._newsList.text = 'Loading...';
 
-    this._newsApi[action](params)
+    this._newsApi.get(endpoint, params)
       .then(result => result && result.articles && result.articles.length
         ? this._newsList.articles = result.articles
         : this._newsList.text = `Nothing's found. Try changing the channel or page number.`

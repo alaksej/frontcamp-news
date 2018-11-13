@@ -7,18 +7,8 @@ export class NewsAPI {
     this._apiKey = apiKey;
   }
 
-  topHeadlines(params = { language: 'en' }) {
-    const url = this._buildUrl('/v2/top-headlines', params);
-    return this._getDataFromWeb(url, this._apiKey);
-  }
-
-  everything(params) {
-    const url = this._buildUrl('/v2/everything', params);
-    return this._getDataFromWeb(url, this._apiKey);
-  }
-
-  sources(params) {
-    const url = this._buildUrl('/v2/sources', params);
+  get(endpoint, params) {
+    const url = this._buildUrl(`/v2/${endpoint}`, params);
     return this._getDataFromWeb(url, this._apiKey);
   }
 
@@ -29,7 +19,7 @@ export class NewsAPI {
   }
 
   _getDataFromWeb(url, apiKey) {
-    const headers = apiKey ? new Headers({ 'x-api-key': apiKey }) : {};
+    const headers = apiKey ? { 'x-api-key': apiKey } : {};
     return fetch(url, { headers })
       .then(response => response.json())
       .then(body => {

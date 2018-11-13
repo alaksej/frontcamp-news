@@ -4,9 +4,9 @@ export const genericNewsLogoPath = './images/generic_news_logo.png';
 export class SourcesConfig {
   constructor() {
     this._sourcesConfig = new Map([
-      ['1', { displayName: 'Top headlines from BBC News', urlConfig: { action: 'topHeadlines', params: { sources: 'bbc-news' } } }],
-      ['2', { displayName: 'Articles about Bitcoin', urlConfig: { action: 'everything', params: { q: 'bitcoin' } } }],
-      ['3', { displayName: 'Top sports headlines', urlConfig: { action: 'topHeadlines', params: { category: 'sport' } } }],
+      ['1', { displayName: 'Top headlines from BBC News', urlConfig: { endpoint: 'top-headlines', params: { sources: 'bbc-news' } } }],
+      ['2', { displayName: 'Articles about Bitcoin', urlConfig: { endpoint: 'everything', params: { q: 'bitcoin' } } }],
+      ['3', { displayName: 'Top sports headlines', urlConfig: { endpoint: 'top-headlines', params: { category: 'sport' } } }],
     ]);
   }
 
