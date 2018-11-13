@@ -9,7 +9,7 @@ export class App {
     this._sourcesConfig = new SourcesConfig();
     this._newsApi = new NewsAPI(apiKey);
     this._searchPanel = new SearchPanel({ sources: this._sourcesConfig.getSearchPanelOptions() });
-    this._newsList = new NewsList();
+    this._newsList = new NewsList(document.getElementById('newsListContainer'));
     this._newsList.text = `Click 'Go' to get some news!`;
     this._searchPanel.submitClick.subscribe(this.onSubmitClick.bind(this));
   }

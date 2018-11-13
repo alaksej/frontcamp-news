@@ -3,9 +3,8 @@ import { genericNewsLogoPath } from '../config/config.js';
 
 /** Displays the list of the news articles */
 export class NewsList {
-  constructor(articles) {
-    this._newsListContainer = document.getElementById('newsListContainer');
-    this.articles = articles;
+  constructor(containerEl) {
+    this._newsListContainer = containerEl;
   }
 
   set text(text) {
