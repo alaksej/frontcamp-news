@@ -28,7 +28,8 @@ export class App {
       result && result.articles && result.articles.length
         ? this._newsList.articles = result.articles
         : this._newsList.text = `Nothing's found. Try changing the channel or page number.`;
-    } catch {
+    } catch(e) {
+      console.log(e);
       this._newsList.text = 'Oops, something went wrong. Maybe the page number is too big?';
     } finally {
       this._searchPanel.enableSubmit();
