@@ -177,17 +177,17 @@ h1, h2, h3 {
 }
 
 .btn[disabled], .btn[disabled]:hover {
-  background-color: var(--color-gray-2);
+  background-color: #babdc0;
   cursor: default;
 }
 
 .btn-primary {
   color: #fff;
-  background-color: var(--color-primary-0);
+  background-color: hsl(200, 97%, 45%);
 }
 
 .btn-primary:hover {
-  background-color: var(--color-primary-3);
+  background-color: hsl(199, 93%, 47%);
 }
 
 .container {
@@ -196,7 +196,7 @@ h1, h2, h3 {
 }
 
 .header {
-  background: var(--color-primary-0);
+  background: hsl(200, 97%, 45%);
   color: rgba(255, 255, 255, 0.8);
   white-space: nowrap;
   user-select: none;
@@ -217,7 +217,7 @@ main .content-wrapper {
 }
 
 .footer {
-  background: var(--color-primary-0);
+  background: hsl(200, 97%, 45%);
   height: 30px;
   display: flex;
   position: absolute;
@@ -294,7 +294,7 @@ main .content-wrapper {
 .card-footer {
   display: flex;
   font-size: 12px;
-  color:  var(--color-gray-3);
+  color:  #6c6e6f;
   justify-content: space-between;
 }
 
