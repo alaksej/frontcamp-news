@@ -19,16 +19,19 @@ export class App {
     this.loadNews(endpoint, { ...params, page });
   }
 
-  loadNews(endpoint, params) {
+  async loadNews(endpoint, params) {
     this._searchPanel.disableSubmit();
     this._newsList.text = 'Loading...';
 
-    this._newsApi.get(endpoint, params)
-      .then(result => result && result.articles && result.articles.length
+    try {
+      const result = await this._newsApi.get(endpoint, params);
+      result && result.articles && result.articles.length
         ? this._newsList.articles = result.articles
-        : this._newsList.text = `Nothing's found. Try changing the channel or page number.`
-      )
-      .catch(() => this._newsList.text = 'Oops, something went wrong. Maybe the page number is too big?')
-      .then(() => this._searchPanel.enableSubmit());
+        : this._newsList.text = `Nothing's found. Try changing the channel or page number.`;
+    } catch {
+      this._newsList.text = 'Oops, something went wrong. Maybe the page number is too big?';
+    } finally {
+      this._searchPanel.enableSubmit();
+    }
   }
 }

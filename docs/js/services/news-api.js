@@ -7,9 +7,9 @@ export class NewsAPI {
     this._apiKey = apiKey;
   }
 
-  get(endpoint, params) {
+  async get(endpoint, params) {
     const url = this._buildUrl(`/v2/${endpoint}`, params);
-    return this._getDataFromWeb(url, this._apiKey);
+    return await this._getDataFromWeb(url, this._apiKey);
   }
 
   _buildUrl(endpoint, params) {
@@ -18,16 +18,14 @@ export class NewsAPI {
     return queryParams ? `${baseURL}?${queryParams}` : baseURL;
   }
 
-  _getDataFromWeb(url, apiKey) {
+  async _getDataFromWeb(url, apiKey) {
     const headers = apiKey ? { 'x-api-key': apiKey } : {};
-    return fetch(url, { headers })
-      .then(response => response.json())
-      .then(body => {
-        if (body.status === 'error') {
-          throw new NewsAPIError(body);
-        }
-        return body;
-      });
+    const response = await fetch(url, { headers });
+    const body = await response.json();
+    if (body.status === 'error') {
+      throw new NewsAPIError(body);
+    }
+    return body;
   }
 }
 
