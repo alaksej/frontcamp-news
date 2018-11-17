@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "serve": "http-server ./docs",
+    "start": "webpack-dev-server --open",
     "build": "webpack --config webpack.config.js",
     "watch": "webpack --watch"
   },
@@ -27,7 +27,6 @@
     "@babel/preset-env": "^7.1.6",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.4",
-    "http-server": "^0.11.1",
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10"
