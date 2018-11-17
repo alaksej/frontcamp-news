@@ -12,6 +12,7 @@ export class SearchPanel {
     this._submitButton = document.getElementById('submit');
     this._submitButton.addEventListener('click', this._onSubmitClick.bind(this));
     this._submitClick = new EventEmitter();
+    this.enableSubmit();
   }
 
   get page() {
