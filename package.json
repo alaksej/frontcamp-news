@@ -9,7 +9,7 @@
   "scripts": {
     "serve": "http-server ./docs",
     "build": "webpack --config webpack.config.js",
-    "watch": "babel src --watch -out-file docs/js/main.js"
+    "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
