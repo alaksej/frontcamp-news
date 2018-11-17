@@ -1,5 +1,7 @@
 "use strict";
 
+require("@babel/polyfill");
+
 var _app = require("./app.js");
 
 /** Initialize the application here */
