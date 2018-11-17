@@ -1,3 +1,4 @@
+import './polyfills.js';
 import { App } from './app.js';
 
 /** Initialize the application here */
