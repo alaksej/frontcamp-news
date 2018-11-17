@@ -80,27 +80,28 @@ function () {
               case 5:
                 result = _context.sent;
                 result && result.articles && result.articles.length ? this._newsList.articles = result.articles : this._newsList.text = "Nothing's found. Try changing the channel or page number.";
-                _context.next = 12;
+                _context.next = 13;
                 break;
 
               case 9:
                 _context.prev = 9;
                 _context.t0 = _context["catch"](2);
+                console.error(_context.t0);
                 this._newsList.text = 'Oops, something went wrong. Maybe the page number is too big?';
 
-              case 12:
-                _context.prev = 12;
+              case 13:
+                _context.prev = 13;
 
                 this._searchPanel.enableSubmit();
 
-                return _context.finish(12);
+                return _context.finish(13);
 
-              case 15:
+              case 16:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[2, 9, 12, 15]]);
+        }, _callee, this, [[2, 9, 13, 16]]);
       }));
 
       return function loadNews(_x, _x2) {

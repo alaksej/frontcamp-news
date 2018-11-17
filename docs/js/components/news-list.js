@@ -41,7 +41,7 @@ function () {
         }).join('');
       }
 
-      document.querySelectorAll('.card-image img').forEach(function (image) {
+      Array.from(document.querySelectorAll('.card-image img')).forEach(function (image) {
         return image.onload = function () {
           return image.parentElement.classList.remove('loading');
         };

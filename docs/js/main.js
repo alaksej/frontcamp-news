@@ -1,6 +1,6 @@
 "use strict";
 
-require("@babel/polyfill");
+require("./polyfills.js");
 
 var _app = require("./app.js");
 
