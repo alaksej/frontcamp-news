@@ -7,8 +7,8 @@
     "doc": "docs"
   },
   "scripts": {
-    "start": "http-server ./docs",
-    "build": "babel src --out-file docs/js/main.js",
+    "serve": "http-server ./docs",
+    "build": "babel src --out-dir docs",
     "watch": "babel src --watch -out-file docs/js/main.js"
   },
   "repository": {
@@ -24,7 +24,9 @@
   "devDependencies": {
     "@babel/cli": "^7.1.5",
     "@babel/core": "^7.1.6",
+    "@babel/polyfill": "^7.0.0",
     "@babel/preset-env": "^7.1.6",
+    "browserify": "^16.2.3",
     "http-server": "^0.11.1"
   }
 }
