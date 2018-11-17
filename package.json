@@ -7,8 +7,11 @@
     "doc": "docs"
   },
   "scripts": {
+    "start": "npm run build & npm run serve",
+    "build": "npm run transpile & npm run bundle",
+    "bundle": "browserify docs/js/main.js > docs/js/bundle.js",
     "serve": "http-server ./docs",
-    "build": "babel src --out-dir docs",
+    "transpile": "babel src --out-dir docs",
     "watch": "babel src --watch -out-file docs/js/main.js"
   },
   "repository": {
