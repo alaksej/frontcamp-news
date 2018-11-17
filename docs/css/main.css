@@ -210,6 +210,7 @@ h1, h2, h3 {
 
 main {
   padding-bottom: 30px;
+  display: block;
 }
 
 main .content-wrapper {
