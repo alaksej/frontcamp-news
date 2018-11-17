@@ -27,6 +27,19 @@
   margin: 0;
 }
 
+html,
+body {
+   margin:0;
+   padding:0;
+   height:100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  font-family: "Google Sans",sans-serif;
+  color: rgba(0, 0, 0, 0.87);
+}
+
 [hidden] {
   display: none !important;
 }
@@ -175,4 +188,163 @@ h1, h2, h3 {
 
 .btn-primary:hover {
   background-color: var(--color-primary-3);
+}
+
+.container {
+  min-height: 100%;
+  position: relative;
+}
+
+.header {
+  background: var(--color-primary-0);
+  color: rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.header h1 {
+  padding: 10px 0px 10px 0px;
+  margin: 0;
+  color: white;
+}
+
+main {
+  padding-bottom: 30px;
+}
+
+main .content-wrapper {
+  padding-top: 20px;
+}
+
+.footer {
+  background: var(--color-primary-0);
+  height: 30px;
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.search-panel {
+  padding: 20px;
+}
+
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px 0;
+  justify-content: center;
+}
+
+.card {
+  max-width: 284px;
+  /* height: 300px; */
+  margin: 8px;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+}
+
+.card .card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.card .card-link:visited {
+  color: inherit;
+}
+
+.card-image {
+  height: 110px;
+  overflow: hidden;
+}
+
+.card-image img {
+  border-radius: 8px 8px 0 0;
+  width: 100%;
+}
+
+.card-text {
+  padding: 10px;
+}
+
+.card-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-height: 22px;
+  height: 66px;
+}
+
+
+.card-description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-height: 18px;
+  height: 54px;
+  margin-bottom: 20px;
+}
+
+.card-footer {
+  display: flex;
+  font-size: 12px;
+  color:  var(--color-gray-3);
+  justify-content: space-between;
+}
+
+.card-source {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.attribution {
+  text-decoration: none;
+  color: rgba(255, 255, 255, .7);
+  font-weight: 600;
+  line-height: 30px;
+  padding: 0 20px;
+  font-size: 12px;
+  transition: color .2s;
+}
+
+.attribution:hover {
+  color: rgba(255, 255, 255);
+}
+
+.loading {
+  position: relative;
+}
+
+.loading::before {
+  animation-name: placeHolderShimmer;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  animation-direction: alternate;
+  animation-fill-mode: forwards;
+  overflow: hidden;
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+  border-radius: 8px 8px 0 0;
+}
+
+@keyframes placeHolderShimmer{
+  0%{
+      background: hsl(200, 25%, 99%);
+  }
+  100%{
+    background: hsl(200, 25%, 96%);
+  }
 }
