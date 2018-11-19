@@ -7,8 +7,10 @@
     "doc": "docs"
   },
   "scripts": {
-    "start": "webpack-dev-server --open --config webpack.config.es6.js",
-    "build": "npm run build:es5 & npm run build:es6",
+    "start": "concurrently \"npm run start:es6\" \"npm run watch:es5\"",
+    "start:es6": "webpack-dev-server --open --config webpack.config.es6.js",
+    "start:es5": "webpack-dev-server --config webpack.config.es5.js",
+    "build": "concurrently \"npm run build:es5\" \"npm run build:es6\"",
     "build:es5": "webpack --config webpack.config.es5.js",
     "build:es6": "webpack --config webpack.config.es6.js",
     "watch:es6": "webpack --watch --config webpack.config.es6.js",
@@ -31,6 +33,7 @@
     "@babel/preset-env": "^7.1.6",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.4",
+    "concurrently": "^4.1.0",
     "http-server": "^0.11.1",
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.2",
