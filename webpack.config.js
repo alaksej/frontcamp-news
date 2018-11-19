@@ -5,7 +5,7 @@ module.exports = {
   entry: "./docs/js/main.js",
   output: {
     path: path.resolve(__dirname, "docs"),
-    filename: "js/bundle.js"
+    filename: "js/bundle.es5.js"
   },
   module: {
     rules: [
