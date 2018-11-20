@@ -2,6 +2,8 @@ const host = 'https://newsapi.org';
 
 /** Fetches the news data from the web */
 export class NewsAPI {
+  _apiKey;
+  
   constructor(apiKey) {
     if (!apiKey) throw new Error('No API key specified');
     this._apiKey = apiKey;
