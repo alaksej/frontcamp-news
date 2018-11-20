@@ -2,9 +2,7 @@ import { isFunction } from './utls.js';
 
 /** Provides a layer of abstraction from the DOM events. */
 export class EventEmitter {
-  constructor() {
-    this._subscribers = [];
-  }
+  _subscribers = [];
 
   emit(value) {
     this._subscribers.forEach(subscriber => subscriber(value));
