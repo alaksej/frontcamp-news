@@ -16,7 +16,7 @@ export class SearchPanel {
   }
 
   get page() {
-    const page = this._pageEl && +this._pageEl.value || 1;
+    const page = !this._isPaginationHidden && this._pageEl && +this._pageEl.value || 1;
     if (!Number.isInteger(page) || page < 1) {
       throw new TypeError('The page must be a positive integer number');
     }
