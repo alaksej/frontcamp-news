@@ -53,6 +53,13 @@ const configureStylesLoader = isProd => {
   }
 }
 
+const configureImageLoader = isProd => ({
+  test: /\.(png|svg|jpg|gif)$/,
+  use: [
+    'file-loader'
+  ]
+})
+
 const getBaseConfig = isProd => ({
   mode: isProd ? 'production' : 'development',
   entry: {
@@ -82,6 +89,7 @@ const getModernConfig = isProd => ({
         'last 2 Edge versions', 'not Edge < 15',
       ]),
       configureStylesLoader(isProd),
+      configureImageLoader(isProd),
     ],
   },
 });
@@ -101,6 +109,7 @@ const getLegacyConfig = isProd => ({
         'Firefox ESR',
       ]),
       configureStylesLoader(isProd),
+      configureImageLoader(isProd),
     ],
   },
 });
