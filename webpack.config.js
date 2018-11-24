@@ -135,13 +135,13 @@ const getLegacyConfig = isProd => ({
 module.exports = (env, argv) => {
   const isProd = env === 'production';
   if (isProd) {
+    // setting the node env to be used by postcss.config
     process.env.NODE_ENV = 'production';
   }
-  
-  const isLegacy = argv['es5'] ? JSON.parse(argv['es5']) : false;
-  const config = isLegacy
-    ? getLegacyConfig(isProd)
-    : getModernConfig(isProd);
-  console.log({ isProd, isLegacy });
-  return config;
+
+  return [
+    // TODO: figure out how to include both bundles in index.html
+    // getModernConfig(isProd),
+    getLegacyConfig(isProd),
+  ];
 }

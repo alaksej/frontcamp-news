@@ -7,10 +7,10 @@
     "doc": "docs"
   },
   "scripts": {
-    "start": "webpack-dev-server --es5=true",
-    "start:prod": "webpack-dev-server --es5=true --env=production",
-    "build": "webpack --es5=true",
-    "build:prod": "webpack --es5=true --env=production",
+    "start": "webpack-dev-server",
+    "start:prod": "webpack-dev-server --env=production",
+    "build": "webpack",
+    "build:prod": "webpack --env=production",
     "serve": "http-server ./docs"
   },
   "repository": {
