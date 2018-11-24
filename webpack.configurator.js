@@ -1,10 +1,15 @@
 const path = require('path');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const configurePlugins = () => {
-  const plugins = [
+  return [
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: "[name].css",
+      chunkFilename: "[id].css"
+    })
   ];
-
-  return plugins;
 };
 
 const configureBabelLoader = (browserlist) => {
@@ -17,7 +22,7 @@ const configureBabelLoader = (browserlist) => {
         babelrc: false,
         presets: [
           ['@babel/preset-env', {
-            debug: true,
+            // debug: true,
             modules: false,
             useBuiltIns: 'usage',
             targets: {
@@ -33,29 +38,32 @@ const configureBabelLoader = (browserlist) => {
   };
 };
 
-configureCssLoader = () => {
+const configureStylesLoader = isProd => {
   return {
-    test: /\.css$/,
+    test: /\.scss$/,
     use: [
-      'style-loader',
+      // TODO: load common styles as a bundle,
+      // component-specific - on demand (with style-loader)
+      !isProd ? 'style-loader' : MiniCssExtractPlugin.loader,
       'css-loader',
       'postcss-loader',
+      'sass-loader',
     ]
   }
 }
 
-const baseConfig = {
-  mode: process.env.NODE_ENV || 'development',
+const getBaseConfig = isProd => ({
+  mode: isProd ? 'production' : 'development',
   entry: {
     'main': './src/js/main.js',
   },
   devServer: {
     contentBase: path.join(__dirname, 'docs'),
   },
-};
+});
 
-const modernConfig = {
-  ...baseConfig,
+const getModernConfig = isProd => ({
+  ...getBaseConfig(isProd),
   output: {
     path: path.resolve(__dirname, 'docs'),
     filename: 'js/bundle.es6.js',
@@ -72,13 +80,13 @@ const modernConfig = {
         'last 2 Firefox versions', 'not Firefox < 54',
         'last 2 Edge versions', 'not Edge < 15',
       ]),
-      configureCssLoader(),
+      configureStylesLoader(isProd),
     ],
   },
-};
+});
 
-const legacyConfig = {
-  ...baseConfig,
+const getLegacyConfig = isProd => ({
+  ...getBaseConfig(isProd),
   output: {
     path: path.resolve(__dirname, 'docs'),
     filename: 'js/bundle.es5.js',
@@ -91,12 +99,12 @@ const legacyConfig = {
         'last 2 versions',
         'Firefox ESR',
       ]),
-      configureCssLoader(),
+      configureStylesLoader(isProd),
     ],
   },
-};
+});
 
 module.exports = {
-  modernConfig,
-  legacyConfig,
+  getModernConfig,
+  getLegacyConfig,
 }

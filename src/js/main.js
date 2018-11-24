@@ -1,6 +1,6 @@
 import './polyfills.js';
 import { App } from './app.js';
-import '../styles/main.css';
+import '../styles/main.scss';
 
 
 /** Initialize the application here */
