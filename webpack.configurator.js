@@ -72,7 +72,8 @@ const configureImageLoader = isProd => ({
 const getBaseConfig = isProd => ({
   mode: isProd ? 'production' : 'development',
   entry: {
-    'main': './src/js/main.js',
+    main: './src/js/main.js',
+    newslist: './src/js/components/news-list.js',
   },
   devServer: {
     contentBase: path.join(__dirname, 'docs'),
@@ -83,7 +84,7 @@ const getModernConfig = isProd => ({
   ...getBaseConfig(isProd),
   output: {
     path: path.resolve(__dirname, 'docs'),
-    filename: 'js/bundle.es6.js',
+    filename: 'js/[name].bundle.es6.js',
   },
   plugins: configurePlugins(),
   module: {
@@ -107,7 +108,7 @@ const getLegacyConfig = isProd => ({
   ...getBaseConfig(isProd),
   output: {
     path: path.resolve(__dirname, 'docs'),
-    filename: 'js/bundle.es5.js',
+    filename: 'js/[name].bundle.es5.js',
   },
   plugins: configurePlugins(),
   module: {
