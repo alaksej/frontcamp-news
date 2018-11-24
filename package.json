@@ -7,16 +7,10 @@
     "doc": "docs"
   },
   "scripts": {
-    "start": "concurrently \"npm run start:es6\" \"npm run watch:es5\"",
-    "start:prod": "cross-env NODE_ENV=production concurrently \"npm run start:es6\" \"npm run watch:es5\"",
-    "start:es6": "webpack-dev-server --config webpack.config.es6.js",
-    "start:es5": "webpack-dev-server --config webpack.config.es5.js",
-    "build": "concurrently \"npm run build:es5\" \"npm run build:es6\"",
-    "build:prod": "concurrently \"npm run build:es5 -- --env=production\" \"npm run build:es6 -- --env=production\"",
-    "build:es5": "webpack --config webpack.config.js --es5=true",
-    "build:es6": "webpack --config webpack.config.js",
-    "watch:es6": "webpack --watch --config webpack.config.es6.js",
-    "watch:es5": "webpack --watch --config webpack.config.es5.js",
+    "start": "webpack-dev-server --es5=true",
+    "start:prod": "webpack-dev-server --es5=true --env=production",
+    "build": "webpack --es5=true",
+    "build:prod": "webpack --es5=true --env=production",
     "serve": "http-server ./docs"
   },
   "repository": {
