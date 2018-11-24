@@ -1,5 +1,4 @@
 const path = require('path');
-const isProd = process.env.NODE_ENV === 'production';
 const outputFolder = 'docs';
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -133,7 +132,16 @@ const getLegacyConfig = isProd => ({
   },
 });
 
-module.exports = {
-  getModernConfig: () => getModernConfig(isProd),
-  getLegacyConfig: () => getLegacyConfig(isProd),
+module.exports = (env, argv) => {
+  const isProd = env === 'production';
+  if (isProd) {
+    process.env.NODE_ENV = 'production';
+  }
+  
+  const isLegacy = argv['es5'] ? JSON.parse(argv['es5']) : false;
+  const config = isLegacy
+    ? getLegacyConfig(isProd)
+    : getModernConfig(isProd);
+  console.log({ isProd, isLegacy });
+  return config;
 }
