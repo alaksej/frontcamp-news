@@ -56,7 +56,16 @@ const configureStylesLoader = isProd => {
 const configureImageLoader = isProd => ({
   test: /\.(png|svg|jpg|gif)$/,
   use: [
-    'file-loader'
+    'file-loader',
+    {
+      loader: 'image-webpack-loader',
+      options: {
+        disable: !isProd,
+        optipng: {
+          enabled: true,
+        },
+      },
+    },
   ]
 })
 
