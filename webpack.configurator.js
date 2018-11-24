@@ -1,11 +1,14 @@
 const path = require('path');
 const isProd = process.env.NODE_ENV === 'production';
+const outputFolder = 'docs';
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const configurePlugins = () => {
   return [
+    new CleanWebpackPlugin([outputFolder]),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
@@ -82,14 +85,14 @@ const getBaseConfig = isProd => ({
     newslist: './src/js/components/news-list.js',
   },
   devServer: {
-    contentBase: path.join(__dirname, 'docs'),
+    contentBase: path.join(__dirname, outputFolder),
   },
 });
 
 const getModernConfig = isProd => ({
   ...getBaseConfig(isProd),
   output: {
-    path: path.resolve(__dirname, 'docs'),
+    path: path.resolve(__dirname, outputFolder),
     filename: 'js/[name].bundle.es6.js',
   },
   plugins: configurePlugins(),
@@ -113,7 +116,7 @@ const getModernConfig = isProd => ({
 const getLegacyConfig = isProd => ({
   ...getBaseConfig(isProd),
   output: {
-    path: path.resolve(__dirname, 'docs'),
+    path: path.resolve(__dirname, outputFolder),
     filename: 'js/[name].bundle.es5.js',
   },
   plugins: configurePlugins(),
