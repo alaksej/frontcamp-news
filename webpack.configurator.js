@@ -33,6 +33,16 @@ const configureBabelLoader = (browserlist) => {
   };
 };
 
+configureCssLoader = () => {
+  return {
+    test: /\.css$/,
+    use: [
+      'style-loader',
+      'css-loader'
+    ]
+  }
+}
+
 const baseConfig = {
   mode: process.env.NODE_ENV || 'development',
   entry: {
@@ -61,6 +71,7 @@ const modernConfig = {
         'last 2 Firefox versions', 'not Firefox < 54',
         'last 2 Edge versions', 'not Edge < 15',
       ]),
+      configureCssLoader(),
     ],
   },
 };
@@ -79,6 +90,7 @@ const legacyConfig = {
         'last 2 versions',
         'Firefox ESR',
       ]),
+      configureCssLoader(),
     ],
   },
 };
