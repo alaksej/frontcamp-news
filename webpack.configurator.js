@@ -1,6 +1,8 @@
 const path = require('path');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const isProd = process.env.NODE_ENV === 'production';
+
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const configurePlugins = () => {
   return [
@@ -9,7 +11,11 @@ const configurePlugins = () => {
       // both options are optional
       filename: "[name].css",
       chunkFilename: "[id].css"
-    })
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Worldwide News',
+      template: './src/index.html',
+    }),
   ];
 };
 
