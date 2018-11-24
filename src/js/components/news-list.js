@@ -40,7 +40,7 @@ export class NewsList {
           </div>
           <div class="card-text">
             <h3 class="card-title" title="${article.title}">${article.title}</h3>
-            <p class="card-description" title="${article.description}">${article.description}</p>
+            <p class="card-description" title="${article.description || ''}">${article.description || ''}</p>
             <div class="card-footer">
               <p class="card-date">
                 <time title="${new Date(article.publishedAt).toLocaleString()}">${new Date(article.publishedAt).toLocaleDateString()}</time>
