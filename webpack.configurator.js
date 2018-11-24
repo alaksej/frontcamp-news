@@ -1,5 +1,6 @@
 const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const isProd = process.env.NODE_ENV === 'production';
 
 const configurePlugins = () => {
   return [
@@ -105,6 +106,6 @@ const getLegacyConfig = isProd => ({
 });
 
 module.exports = {
-  getModernConfig,
-  getLegacyConfig,
+  getModernConfig: () => getModernConfig(isProd),
+  getLegacyConfig: () => getLegacyConfig(isProd),
 }
