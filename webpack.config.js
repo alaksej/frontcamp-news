@@ -84,6 +84,7 @@ const configureImageLoader = isProd => ({
 const getBaseConfig = isProd => ({
   mode: isProd ? 'production' : 'development',
   entry: {
+    polyfills: './src/js/polyfills.js',
     main: './src/js/main.js',
   },
   devServer: {
