@@ -12,7 +12,7 @@ const configurePlugins = () => {
       // Options similar to the same options in webpackOptions.output
       // both options are optional
       filename: "[name].css",
-      chunkFilename: "[id].css"
+      chunkFilename: "[name].css"
     }),
     new HtmlWebpackPlugin({
       inject: false,
@@ -57,6 +57,7 @@ const configureStylesLoader = isProd => {
     use: [
       // TODO: load common styles as a bundle,
       // component-specific - on demand (with style-loader)
+      'style-loader',
       MiniCssExtractPlugin.loader,
       'css-loader',
       'postcss-loader',

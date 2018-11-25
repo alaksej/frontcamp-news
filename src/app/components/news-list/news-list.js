@@ -1,5 +1,6 @@
-import { DOMHelper, isIterable } from '../core/utls.js';
-import { genericNewsLogoPath } from '../config/config.js';
+import { DOMHelper, isIterable } from '../../core/utls.js';
+import { genericNewsLogoPath } from '../../config/config.js';
+import './news-list.scss';
 
 /** Displays the list of the news articles */
 export default class NewsList {

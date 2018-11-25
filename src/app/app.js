@@ -20,7 +20,7 @@ export class App {
 
   async loadNews(endpoint, params) {
     if (!this._newsList) {
-      const { default: NewsList } = await import(/* webpackChunkName: "newslist" */ './components/news-list.js');
+      const { default: NewsList } = await import(/* webpackChunkName: "newslist" */ './components/news-list/news-list.js');
       this._newsList = new NewsList(document.getElementById('newsListContainer'));
     }
 
