@@ -53,8 +53,11 @@
       </div>
     </footer>
   </div>
-  <!-- TODO: inject both module and nomodule -->
-  <script src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
+  <script type="module" src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
+  <script type="module" src="<%= htmlWebpackPlugin.files.chunks.newslist.entry %>"></script>
+  <!-- Fallback scripts: how do I get them from htmlWebpackPlugin? -->
+  <script nomodule src="js/main.bundle.es5.js"></script>
+  <script nomodule src="js/newslist.bundle.es5.js"></script>
 </body>
 
 </html>

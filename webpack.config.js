@@ -143,7 +143,7 @@ module.exports = (env, argv) => {
 
   return [
     // TODO: figure out how to include both bundles in index.html
-    // getModernConfig(isProd),
+    getModernConfig(isProd),
     getLegacyConfig(isProd),
   ];
 }
