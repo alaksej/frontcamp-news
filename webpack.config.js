@@ -77,7 +77,27 @@ const configureImageLoader = isProd => ({
       },
     },
   ]
-})
+});
+
+const configureCustomJsonLoader = isProd => ({
+  test: /test\.json$/,
+  use: [
+    {
+      loader: path.resolve('./json-transform-loader/json-transform-loader'),
+      options: {
+        transformFn: obj => {
+          // TODO: recursively
+          Object.keys(obj).forEach(key => {
+            if (!isNaN(obj[key])) {
+              delete obj[key];
+            }
+          });
+          return obj;
+        },
+      },
+    },
+  ]
+});
 
 const getBaseConfig = isProd => ({
   mode: isProd ? 'production' : 'development',
@@ -113,6 +133,7 @@ const getModernConfig = isProd => ({
       }),
       configureStylesLoader(isProd),
       configureImageLoader(isProd),
+      configureCustomJsonLoader(isProd),
     ],
   },
 });
@@ -137,6 +158,7 @@ const getLegacyConfig = isProd => ({
       }),
       configureStylesLoader(isProd),
       configureImageLoader(isProd),
+      // configureCustomJsonLoader(isProd),
     ],
   },
 });
