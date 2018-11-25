@@ -15,8 +15,10 @@ const configurePlugins = () => {
       chunkFilename: "[id].css"
     }),
     new HtmlWebpackPlugin({
+      inject: false,
       title: 'Worldwide News',
       template: './src/index.html',
+      favicon: './src/favicon/favicon-16x16.png',
     }),
   ];
 };
@@ -53,7 +55,7 @@ const configureStylesLoader = isProd => {
     use: [
       // TODO: load common styles as a bundle,
       // component-specific - on demand (with style-loader)
-      !isProd ? 'style-loader' : MiniCssExtractPlugin.loader,
+      MiniCssExtractPlugin.loader,
       'css-loader',
       'postcss-loader',
       'sass-loader',
