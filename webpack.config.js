@@ -149,8 +149,9 @@ module.exports = (env, argv) => {
     process.env.NODE_ENV = 'production';
   }
 
+  console.log({ isProd });
+
   return [
-    // TODO: figure out how to include both bundles in index.html
     getModernConfig(isProd),
     getLegacyConfig(isProd),
   ];
