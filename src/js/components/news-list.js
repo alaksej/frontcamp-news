@@ -2,7 +2,7 @@ import { DOMHelper, isIterable } from '../core/utls.js';
 import { genericNewsLogoPath } from '../config/config.js';
 
 /** Displays the list of the news articles */
-export class NewsList {
+export default class NewsList {
   _newsListContainer;
 
   constructor(containerEl) {

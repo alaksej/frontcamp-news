@@ -53,11 +53,8 @@
       </div>
     </footer>
   </div>
-  <script type="module" src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
-  <script type="module" src="<%= htmlWebpackPlugin.files.chunks.newslist.entry %>"></script>
-  <!-- Fallback scripts: how do I get them from htmlWebpackPlugin? -->
-  <script nomodule src="js/main.bundle.es5.js"></script>
-  <script nomodule src="js/newslist.bundle.es5.js"></script>
+  <script type="module" src="js/main.bundle.es6.js"></script>
+  <script nomodule src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
 </body>
 
 </html>

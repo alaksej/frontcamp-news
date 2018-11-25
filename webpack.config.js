@@ -44,6 +44,7 @@ const configureBabelLoader = (browserlist) => {
         ],
         plugins: [
           '@babel/plugin-proposal-class-properties',
+          "@babel/plugin-syntax-dynamic-import",
         ],
       },
     },
@@ -84,7 +85,6 @@ const getBaseConfig = isProd => ({
   mode: isProd ? 'production' : 'development',
   entry: {
     main: './src/js/main.js',
-    newslist: './src/js/components/news-list.js',
   },
   devServer: {
     contentBase: path.join(__dirname, outputFolder),
@@ -96,6 +96,7 @@ const getModernConfig = isProd => ({
   output: {
     path: path.resolve(__dirname, outputFolder),
     filename: 'js/[name].bundle.es6.js',
+    chunkFilename: 'js/[name].bundle.es6.js',
   },
   plugins: configurePlugins(),
   module: {
@@ -120,6 +121,7 @@ const getLegacyConfig = isProd => ({
   output: {
     path: path.resolve(__dirname, outputFolder),
     filename: 'js/[name].bundle.es5.js',
+    chunkFilename: 'js/[name].bundle.es5.js',
   },
   plugins: configurePlugins(),
   module: {
