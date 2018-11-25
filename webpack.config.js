@@ -19,6 +19,7 @@ const configurePlugins = () => {
       title: 'Worldwide News',
       template: './src/index.html',
       favicon: './src/favicon/favicon-16x16.png',
+      hash: true,
     }),
   ];
 };
