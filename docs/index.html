@@ -9,7 +9,7 @@
   <meta name="msapplication-TileColor" content="#da532c">
   <title>Worldwide News - News headlines</title>
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-  <link rel="stylesheet" type="text/css" media="screen" href="main.css?720cb73ad66df3a67d52">
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css?fb902c0e1edf816909fc">
 </head>
 
 <body>
@@ -65,15 +65,15 @@
       var scriptElement = document.createElement('script');
 
       scriptElement.async = false;
-      scriptElement.src = 'js/polyfills.bundle.es5.js';
+      scriptElement.src = 'polyfills.bundle.es5.js';
       document.head.appendChild(scriptElement);
     }
   </script>
 
-  <script type="module" src="js/main.bundle.es6.js"></script>
-  <script nomodule src="js/main.bundle.es5.js"></script>
+  <script type="module" src="main.bundle.es6.js"></script>
+  <script nomodule src="main.bundle.es5.js"></script>
   <!-- TODO: use templates like this: -->
-  <!-- <script nomodule src="js/main.bundle.es6.js?720cb73ad66df3a67d52"></script> -->
+  <!-- <script nomodule src="main.bundle.es5.js?fb902c0e1edf816909fc"></script> -->
 </body>
 
 </html>

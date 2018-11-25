@@ -84,8 +84,8 @@ const configureImageLoader = isProd => ({
 const getBaseConfig = isProd => ({
   mode: isProd ? 'production' : 'development',
   entry: {
-    polyfills: './src/js/polyfills.js',
-    main: './src/js/main.js',
+    polyfills: './src/app/polyfills.js',
+    main: './src/app/main.js',
   },
   devServer: {
     contentBase: path.join(__dirname, outputFolder),
@@ -96,8 +96,8 @@ const getModernConfig = isProd => ({
   ...getBaseConfig(isProd),
   output: {
     path: path.resolve(__dirname, outputFolder),
-    filename: 'js/[name].bundle.es6.js',
-    chunkFilename: 'js/[name].bundle.es6.js',
+    filename: '[name].bundle.es6.js',
+    chunkFilename: '[name].bundle.es6.js',
   },
   plugins: configurePlugins(),
   module: {
@@ -123,8 +123,8 @@ const getLegacyConfig = isProd => ({
   ...getBaseConfig(isProd),
   output: {
     path: path.resolve(__dirname, outputFolder),
-    filename: 'js/[name].bundle.es5.js',
-    chunkFilename: 'js/[name].bundle.es5.js',
+    filename: '[name].bundle.es5.js',
+    chunkFilename: '[name].bundle.es5.js',
   },
   plugins: configurePlugins(),
   module: {

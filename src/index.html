@@ -65,13 +65,13 @@
       var scriptElement = document.createElement('script');
 
       scriptElement.async = false;
-      scriptElement.src = 'js/polyfills.bundle.es5.js';
+      scriptElement.src = 'polyfills.bundle.es5.js';
       document.head.appendChild(scriptElement);
     }
   </script>
 
-  <script type="module" src="js/main.bundle.es6.js"></script>
-  <script nomodule src="js/main.bundle.es5.js"></script>
+  <script type="module" src="main.bundle.es6.js"></script>
+  <script nomodule src="main.bundle.es5.js"></script>
   <!-- TODO: use templates like this: -->
   <!-- <script nomodule src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script> -->
 </body>
