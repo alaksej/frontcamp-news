@@ -24,7 +24,7 @@ const configurePlugins = () => {
   ];
 };
 
-const configureBabelLoader = (browserlist) => {
+const configureBabelLoader = ({ browsers, useBuiltIns = false }) => {
   return {
     test: /\.js$/,
     exclude: /(node_modules)/,
@@ -36,9 +36,9 @@ const configureBabelLoader = (browserlist) => {
           ['@babel/preset-env', {
             // debug: true,
             modules: false,
-            useBuiltIns: 'usage',
+            useBuiltIns,
             targets: {
-              browsers: browserlist,
+              browsers,
             },
           }],
         ],
@@ -101,15 +101,17 @@ const getModernConfig = isProd => ({
   plugins: configurePlugins(),
   module: {
     rules: [
-      configureBabelLoader([
-        // The last two versions of each browser, excluding versions
-        // that don't support <script type="module">.
-        'last 2 Chrome versions', 'not Chrome < 60',
-        'last 2 Safari versions', 'not Safari < 10.1',
-        'last 2 iOS versions', 'not iOS < 10.3',
-        'last 2 Firefox versions', 'not Firefox < 54',
-        'last 2 Edge versions', 'not Edge < 15',
-      ]),
+      configureBabelLoader({
+        browsers: [
+          // The last two versions of each browser, excluding versions
+          // that don't support <script type="module">.
+          'last 2 Chrome versions', 'not Chrome < 60',
+          'last 2 Safari versions', 'not Safari < 10.1',
+          'last 2 iOS versions', 'not iOS < 10.3',
+          'last 2 Firefox versions', 'not Firefox < 54',
+          'last 2 Edge versions', 'not Edge < 15',
+        ]
+      }),
       configureStylesLoader(isProd),
       configureImageLoader(isProd),
     ],
@@ -126,11 +128,14 @@ const getLegacyConfig = isProd => ({
   plugins: configurePlugins(),
   module: {
     rules: [
-      configureBabelLoader([
-        '> 1%',
-        'last 2 versions',
-        'Firefox ESR',
-      ]),
+      configureBabelLoader({
+        browsers: [
+          '> 1%',
+          'last 2 versions',
+          'Firefox ESR',
+        ],
+        useBuiltIns: 'usage',
+      }),
       configureStylesLoader(isProd),
       configureImageLoader(isProd),
     ],
