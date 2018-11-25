@@ -55,9 +55,6 @@ const configureStylesLoader = isProd => {
   return {
     test: /\.scss$/,
     use: [
-      // TODO: load common styles as a bundle,
-      // component-specific - on demand (with style-loader)
-      'style-loader',
       MiniCssExtractPlugin.loader,
       'css-loader',
       'postcss-loader',
