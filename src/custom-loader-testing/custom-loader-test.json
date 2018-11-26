@@ -1,0 +1,17 @@
+{
+  "greeting": "Hi there",
+  "name": "Alex",
+  "passport": 1234567890,
+  "addresses": [
+    {
+      "city": "Minsk",
+      "street": "Tirazhnaya",
+      "building": 150
+    },
+    {
+      "city": "Gomel",
+      "building": 3,
+      "street": "Tranzitnaya"
+    }
+  ]
+}

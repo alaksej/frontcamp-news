@@ -40,6 +40,7 @@
     "html-webpack-plugin": "^3.2.0",
     "http-server": "^0.11.1",
     "image-webpack-loader": "^4.5.0",
+    "json-transform-loader": "https://github.com/alaksej/json-transform-loader.git",
     "loader-utils": "^1.1.0",
     "mini-css-extract-plugin": "^0.4.5",
     "node-sass": "^4.10.0",

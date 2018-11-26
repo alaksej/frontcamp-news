@@ -5,6 +5,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
+const removeNumericProperties = require('./src/custom-loader-testing/remove-numeric-properties');
+
 const configurePlugins = () => {
   return [
     new CleanWebpackPlugin([outputFolder]),
@@ -80,20 +82,12 @@ const configureImageLoader = isProd => ({
 });
 
 const configureCustomJsonLoader = isProd => ({
-  test: /test\.json$/,
+  test: /custom-loader-test\.json$/,
   use: [
     {
-      loader: path.resolve('./json-transform-loader/json-transform-loader'),
+      loader: 'json-transform-loader',
       options: {
-        transformFn: obj => {
-          // TODO: recursively
-          Object.keys(obj).forEach(key => {
-            if (!isNaN(obj[key])) {
-              delete obj[key];
-            }
-          });
-          return obj;
-        },
+        transformFn: removeNumericProperties,
       },
     },
   ]
