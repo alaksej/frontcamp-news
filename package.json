@@ -8,9 +8,9 @@
   },
   "scripts": {
     "serve": "http-server ./dist -p 1234",
-    "dev": "parcel ./dist/index.html ./dist/js/main.js",
-    "build": "parcel build ./dist/index.html ./dist/js/main.js",
-    "clean": "rm -rm ./dist"
+    "dev": "yarn clean && parcel ./docs/index.html ./docs/js/main.js",
+    "build": "yarn clean && parcel build ./docs/index.html ./docs/js/main.js",
+    "clean": "rm -rf ./dist"
   },
   "repository": {
     "type": "git",
