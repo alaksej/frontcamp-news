@@ -7,17 +7,10 @@
     "doc": "docs"
   },
   "scripts": {
-    "start": "concurrently \"npm run start:es6\" \"npm run watch:es5\"",
-    "start:es6": "webpack-dev-server --open --config webpack.config.es6.js",
-    "start:es5": "webpack-dev-server --config webpack.config.es5.js",
-    "build": "concurrently \"npm run build:es5\" \"npm run build:es6\"",
-    "build:es5": "webpack --config webpack.config.es5.js",
-    "build:es6": "webpack --config webpack.config.es6.js",
-    "watch:es6": "webpack --watch --config webpack.config.es6.js",
-    "watch:es5": "webpack --watch --config webpack.config.es5.js",
-    "serve": "http-server ./docs",
-    "dev": "parcel ./docs/index.html",
-    "build:parcel": "parcel build ./docs/index.html"
+    "serve": "http-server ./dist -p 1234",
+    "dev": "parcel ./dist/index.html ./dist/js/main.js",
+    "build": "parcel build ./dist/index.html ./dist/js/main.js",
+    "clean": "rm -rm ./dist"
   },
   "repository": {
     "type": "git",
