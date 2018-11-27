@@ -1,6 +1,9 @@
 function forEachProperty(obj, action) {
   Object.keys(obj).forEach(key => {
-    action(obj, key);
+    if (!Array.isArray(obj)) {
+      action(obj, key);
+    }
+
     const value = obj[key];
     if (typeof value === 'object') {
       forEachProperty(value, action);
@@ -11,7 +14,7 @@ function forEachProperty(obj, action) {
 module.exports = function removeNumericProperites(obj) {
 
   forEachProperty(obj, (obj, key) => {
-    if (typeof obj[key] === 'number') {
+    if (!isNaN(+key)) {
       delete obj[key];
     }
   })
