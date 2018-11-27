@@ -7,9 +7,9 @@
     "doc": "docs"
   },
   "scripts": {
+    "start": "yarn clean && parcel ./docs/index.html",
     "serve": "http-server ./dist -p 1234",
-    "dev": "yarn clean && parcel ./docs/index.html ./docs/js/main.js",
-    "build": "yarn clean && parcel build ./docs/index.html ./docs/js/main.js",
+    "build": "yarn clean && parcel build ./docs/index.html",
     "clean": "rm -rf ./dist"
   },
   "repository": {

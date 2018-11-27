@@ -528,4 +528,4 @@ var t=arguments[3];!function(t){"use strict";var r,e=Object.prototype,n=e.hasOwn
 },{"./config/config.js":"iBnt","./services/news-api.js":"ZWwx","./components/news-list.js":"NKgs","./components/search-panel.js":"34Bg"}],"d6sW":[function(require,module,exports) {
 "use strict";require("./polyfills.js");var e=require("./app.js");document.addEventListener("DOMContentLoaded",function(){return new e.App});
 },{"./polyfills.js":"ucGs","./app.js":"QdeU"}]},{},["d6sW"], null)
-//# sourceMappingURL=/main.map
+//# sourceMappingURL=/main.338dded9.map
