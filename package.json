@@ -15,7 +15,9 @@
     "build:es6": "webpack --config webpack.config.es6.js",
     "watch:es6": "webpack --watch --config webpack.config.es6.js",
     "watch:es5": "webpack --watch --config webpack.config.es5.js",
-    "serve": "http-server ./docs"
+    "serve": "http-server ./docs",
+    "dev": "parcel ./docs/index.html",
+    "build:parcel": "parcel build ./docs/index.html"
   },
   "repository": {
     "type": "git",
@@ -36,6 +38,7 @@
     "babel-loader": "^8.0.4",
     "concurrently": "^4.1.0",
     "http-server": "^0.11.1",
+    "parcel-bundler": "^1.10.3",
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10"
