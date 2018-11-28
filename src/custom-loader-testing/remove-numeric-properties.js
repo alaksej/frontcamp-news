@@ -1,23 +1,25 @@
-function forEachProperty(obj, action) {
-  Object.keys(obj).forEach(key => {
-    if (!Array.isArray(obj)) {
-      action(obj, key);
-    }
+function forEachProperty(obj) {
+  if (!Array.isArray(obj)) {
+    removeAllNumberProperties(obj);
+  }
 
+  Object.keys(obj).forEach(key => {
     const value = obj[key];
     if (typeof value === 'object') {
-      forEachProperty(value, action);
+      forEachProperty(obj[key]);
     }
   });
 }
 
+function removeAllNumberProperties(obj) {
+  Object.keys(obj)
+    .filter(key => !isNaN(key))
+    .forEach(numericKey => delete obj[numericKey]);
+}
+
 module.exports = function removeNumericProperites(obj) {
 
-  forEachProperty(obj, (obj, key) => {
-    if (!isNaN(+key)) {
-      delete obj[key];
-    }
-  })
+  forEachProperty(obj);
 
   return obj;
 }
