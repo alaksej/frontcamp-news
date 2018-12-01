@@ -1,7 +1,7 @@
 import { SourcesConfig, apiKey } from './config/config.js';
 import { NewsAPI } from './services/news-api.js';
 import { SearchPanel } from './components/search-panel.js';
-import { handleError } from './error-handler/error-hanlder-loader.js';
+import { handleError } from './error-handling/error-handling.js';
 
 /** The main application class */
 export class App {

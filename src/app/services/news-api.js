@@ -1,4 +1,4 @@
-import { handleError } from "../error-handler/error-hanlder-loader";
+import { handleError } from "../error-handling/error-handling";
 
 const host = 'https://newsapi.org';
 

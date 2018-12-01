@@ -1,4 +1,5 @@
 import './error-popup.scss';
+import { Popup } from '../../components/popup/popup.js';
 
 export class ErrorPopup {
   constructor() {
@@ -6,6 +7,7 @@ export class ErrorPopup {
     if (typeof ErrorPopup.instance === 'object') {
       return ErrorPopup.instance;
     }
+    this._popup = new Popup({ autohideTimeMs: 5000, colorClass: 'red', title: 'Error' });
     ErrorPopup.instance = this;
   }
 
@@ -14,11 +16,7 @@ export class ErrorPopup {
   }
 
   showError(message) {
-    const popup = document.createElement('div');
-    popup.innerHTML = `
-      ${message}
-    `
-    document.body.appendChild(popup);
+    this._popup.message = message;
+    this._popup.show();
   }
-
 }

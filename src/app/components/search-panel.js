@@ -1,6 +1,6 @@
 import { DOMHelper } from '../common/utls.js';
 import { EventEmitter } from '../common/event-emitter.js';
-import { handleError } from '../error-handler/error-hanlder-loader.js';
+import { handleError } from '../error-handling/error-handling.js';
 
 /** Gets search parameters and emits an event when a user clicks submit button */
 export class SearchPanel {

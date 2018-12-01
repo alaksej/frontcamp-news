@@ -10,20 +10,16 @@
   box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
     0 1px 3px 1px rgba(60, 64, 67, 0.15);
   transition: all 0.4s ease-in-out;
-  height: 100px;
+  height: 85px;
 
   &.hidden {
     height: 0;
     opacity: 0;
   }
 
-  .color-stripe.red {
+  .color-stripe {
     width: 40px;
     border-radius: 10px 0 0 10px;
-
-    &.red {
-      background: #ff3500;
-    }
   }
 
   .content {
