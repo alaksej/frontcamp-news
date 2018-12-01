@@ -1,5 +1,8 @@
+import logoPath from '../../images/generic_news_logo.png';
+
 export const apiKey = 'd63e3d1d1622450aaf814fae749afce1';
-export const genericNewsLogoPath = './images/generic_news_logo.png';
+
+export const genericNewsLogoPath = logoPath;
 
 export class SourcesConfig {
   _sourcesConfig = new Map([
