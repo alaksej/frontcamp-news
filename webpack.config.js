@@ -99,6 +99,7 @@ const getBaseConfig = isProd => ({
     polyfills: './src/app/polyfills.js',
     main: './src/app/main.js',
   },
+  devtool: isProd ? 'none' : 'eval-source-map',
   devServer: {
     contentBase: path.join(__dirname, outputFolder),
   },
