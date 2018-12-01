@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[0],{8:function(n,o,t){"use strict";t.r(o),t.d(o,"ErrorHandler",function(){return c});class c{constructor(){if("object"==typeof c.instance)return c.instance;c.instance=this}handle(n){console.log(n)}}}}]);

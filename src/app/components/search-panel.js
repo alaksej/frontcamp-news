@@ -19,7 +19,7 @@ export class SearchPanel {
   }
 
   get page() {
-    const page = !this._isPaginationHidden && this._pageEl && +this._pageEl.value;
+    const page = (!this._isPaginationHidden || 1) && this._pageEl && +this._pageEl.value;
     if (!Number.isInteger(page) || page < 1) {
       const errorMessage = 'The page must be a positive integer number';
       handleError(errorMessage);

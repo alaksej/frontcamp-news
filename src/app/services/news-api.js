@@ -24,11 +24,16 @@ export class NewsAPI {
 
   async _getDataFromWeb(url, apiKey) {
     const headers = apiKey ? { 'x-api-key': apiKey } : {};
-    const response = await fetch(url, { headers });
+    let response;
+    try {
+      response = await fetch(url, { headers });
+    } catch (e) {
+      handleError('Network error.');
+      return;
+    }
     const body = await response.json();
     if (body.status === 'error') {
       const error =  new NewsAPIError(body);
-      handleError(error.message);
       throw error;
     }
     return body;
