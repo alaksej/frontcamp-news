@@ -9,8 +9,8 @@
   "scripts": {
     "start": "webpack-dev-server",
     "start:prod": "webpack-dev-server --env=production",
-    "build": "webpack",
-    "build:prod": "webpack --env=production",
+    "build:dev": "webpack",
+    "build": "webpack --env=production",
     "serve": "http-server ./docs"
   },
   "repository": {
