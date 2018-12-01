@@ -4,6 +4,7 @@ const outputFolder = 'docs';
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackEsmodulesPlugin = require('./webpack/html-webpack-esmodules-plugin');
 
 const removeNumericProperties = require('./src/custom-loader-testing/remove-numeric-properties');
 
@@ -17,12 +18,13 @@ const configurePlugins = () => {
       chunkFilename: "[name].css"
     }),
     new HtmlWebpackPlugin({
-      inject: false,
+      inject: true,
       title: 'Worldwide News',
       template: './src/index.html',
       favicon: './src/favicon/favicon-16x16.png',
       hash: true,
     }),
+    new HtmlWebpackEsmodulesPlugin(),
   ];
 };
 
@@ -95,22 +97,22 @@ const configureCustomJsonLoader = isProd => ({
 
 const getBaseConfig = isProd => ({
   mode: isProd ? 'production' : 'development',
-  entry: {
-    polyfills: './src/app/polyfills.js',
-    main: './src/app/main.js',
-  },
   devtool: isProd ? 'none' : 'eval-source-map',
   devServer: {
     contentBase: path.join(__dirname, outputFolder),
   },
+  optimization: {
+    runtimeChunk: true,
+  }
 });
 
 const getModernConfig = isProd => ({
   ...getBaseConfig(isProd),
+  entry: './src/app/main.js',
   output: {
     path: path.resolve(__dirname, outputFolder),
-    filename: '[name].bundle.es6.js',
-    chunkFilename: '[name].bundle.es6.js',
+    filename: '[name].[chunkhash:8].m.js',
+    chunkFilename: '[name].[chunkhash:8].m.js',
   },
   plugins: configurePlugins(),
   module: {
@@ -135,10 +137,11 @@ const getModernConfig = isProd => ({
 
 const getLegacyConfig = isProd => ({
   ...getBaseConfig(isProd),
+  entry: ['./src/app/polyfills.js', './src/app/main.js'],
   output: {
     path: path.resolve(__dirname, outputFolder),
-    filename: '[name].bundle.es5.js',
-    chunkFilename: '[name].bundle.es5.js',
+    filename: '[name].[chunkhash:8].js',
+    chunkFilename: '[name].[chunkhash:8].js',
   },
   plugins: configurePlugins(),
   module: {
@@ -168,7 +171,7 @@ module.exports = (env, argv) => {
   console.log({ isProd });
 
   return [
-    getModernConfig(isProd),
     getLegacyConfig(isProd),
+    getModernConfig(isProd),
   ];
 }
