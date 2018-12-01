@@ -1,3 +1,5 @@
+import { ErrorPopup } from "./error-popup/error-popup";
+
 export class ErrorHandler {
   constructor() {
     /* Singleton */
@@ -8,6 +10,6 @@ export class ErrorHandler {
   }
 
   handle(error) {
-    console.log(error);
+    ErrorPopup.getInstance().showError(error);
   }
 }
