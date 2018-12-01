@@ -107,6 +107,7 @@ const getBaseConfig = isProd => ({
 
 const getModernConfig = isProd => ({
   ...getBaseConfig(isProd),
+  entry: './src/app/main.js',
   output: {
     path: path.resolve(__dirname, outputFolder),
     filename: '[name].bundle.es6.js',
@@ -135,6 +136,7 @@ const getModernConfig = isProd => ({
 
 const getLegacyConfig = isProd => ({
   ...getBaseConfig(isProd),
+  entry: ['./src/app/polyfills.js', './src/app/main.js'],
   output: {
     path: path.resolve(__dirname, outputFolder),
     filename: '[name].bundle.es5.js',
