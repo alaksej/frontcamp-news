@@ -103,6 +103,9 @@ const getBaseConfig = isProd => ({
   devServer: {
     contentBase: path.join(__dirname, outputFolder),
   },
+  optimization: {
+    runtimeChunk: true,
+  }
 });
 
 const getModernConfig = isProd => ({
