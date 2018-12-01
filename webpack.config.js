@@ -95,10 +95,6 @@ const configureCustomJsonLoader = isProd => ({
 
 const getBaseConfig = isProd => ({
   mode: isProd ? 'production' : 'development',
-  entry: {
-    polyfills: './src/app/polyfills.js',
-    main: './src/app/main.js',
-  },
   devtool: isProd ? 'none' : 'eval-source-map',
   devServer: {
     contentBase: path.join(__dirname, outputFolder),
@@ -110,7 +106,7 @@ const getBaseConfig = isProd => ({
 
 const getModernConfig = isProd => ({
   ...getBaseConfig(isProd),
-  entry: './src/app/main.js',
+  entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, outputFolder),
     filename: '[name].bundle.es6.js',
@@ -139,7 +135,7 @@ const getModernConfig = isProd => ({
 
 const getLegacyConfig = isProd => ({
   ...getBaseConfig(isProd),
-  entry: ['./src/app/polyfills.js', './src/app/main.js'],
+  entry: ['./src/polyfills.js', './src/main.js'],
   output: {
     path: path.resolve(__dirname, outputFolder),
     filename: '[name].bundle.es5.js',
