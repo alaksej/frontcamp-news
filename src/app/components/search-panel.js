@@ -1,5 +1,6 @@
-import { DOMHelper } from '../core/utls.js';
-import { EventEmitter } from '../core/event-emitter.js';
+import { DOMHelper } from '../common/utls.js';
+import { EventEmitter } from '../common/event-emitter.js';
+import { handleError } from '../error-handler/error-hanlder-loader.js';
 
 /** Gets search parameters and emits an event when a user clicks submit button */
 export class SearchPanel {
@@ -18,9 +19,11 @@ export class SearchPanel {
   }
 
   get page() {
-    const page = !this._isPaginationHidden && this._pageEl && +this._pageEl.value || 1;
+    const page = !this._isPaginationHidden && this._pageEl && +this._pageEl.value;
     if (!Number.isInteger(page) || page < 1) {
-      throw new TypeError('The page must be a positive integer number');
+      const errorMessage = 'The page must be a positive integer number';
+      handleError(errorMessage);
+      throw new TypeError(errorMessage);
     }
     return page;
   }

@@ -1,6 +1,7 @@
 import { SourcesConfig, apiKey } from './config/config.js';
 import { NewsAPI } from './services/news-api.js';
 import { SearchPanel } from './components/search-panel.js';
+import { getErrorHandler, handleError } from './error-handler/error-hanlder-loader.js';
 
 /** The main application class */
 export class App {
@@ -34,7 +35,9 @@ export class App {
         : this._newsList.text = `Nothing's found. Try changing the channel or page number.`;
     } catch (e) {
       console.log(e);
-      this._newsList.text = 'Oops, something went wrong. Maybe the page number is too big?';
+      const errorMessage = 'Oops, something went wrong. Maybe the page number is too big?';
+      this._newsList.text = errorMessage;
+      handleError(errorMessage);
     } finally {
       this._searchPanel.enableSubmit();
     }

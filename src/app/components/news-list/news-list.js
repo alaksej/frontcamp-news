@@ -1,4 +1,4 @@
-import { DOMHelper, isIterable } from '../../core/utls.js';
+import { DOMHelper, isIterable } from '../../common/utls.js';
 import { genericNewsLogoPath } from '../../config/config.js';
 import './news-list.scss';
 

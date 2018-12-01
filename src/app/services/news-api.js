@@ -1,3 +1,5 @@
+import { handleError } from "../error-handler/error-hanlder-loader";
+
 const host = 'https://newsapi.org';
 
 /** Fetches the news data from the web */
@@ -25,7 +27,9 @@ export class NewsAPI {
     const response = await fetch(url, { headers });
     const body = await response.json();
     if (body.status === 'error') {
-      throw new NewsAPIError(body);
+      const error =  new NewsAPIError(body);
+      handleError(error.message);
+      throw error;
     }
     return body;
   }
