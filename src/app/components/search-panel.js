@@ -4,14 +4,14 @@ import { handleError } from '../error-handling/error-handling.js';
 
 /** Gets search parameters and emits an event when a user clicks submit button */
 export class SearchPanel {
-  _pageEl = document.getElementById('page');
-  _pageElContainer = document.getElementById('pageContainer');
-  _sourceEl = document.getElementById('source');
-  _submitButton = document.getElementById('submit');
   _submitClick = new EventEmitter();
   _sourcesConfig;
   
   constructor({ sources = [] } = {}) {
+    this._pageEl = document.getElementById('page');
+    this._pageElContainer = document.getElementById('pageContainer');
+    this._sourceEl = document.getElementById('source');
+    this._submitButton = document.getElementById('submit');
     this._sourcesConfig = sources;
     this._initSourceOptions(this._sourceEl, sources);
     this._submitButton.addEventListener('click', this._onSubmitClick.bind(this));

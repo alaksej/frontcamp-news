@@ -2,16 +2,24 @@ import { SourcesConfig, apiKey } from './config/config.js';
 import { NewsAPI } from './services/news-api.js';
 import { SearchPanel } from './components/search-panel.js';
 import { handleError } from './error-handling/error-handling.js';
+import template from './app.template.js';
 
 /** The main application class */
 export class App {
   _sourcesConfig = new SourcesConfig();
   _newsApi = new NewsAPI(apiKey);
-  _searchPanel = new SearchPanel({ sources: this._sourcesConfig.getSearchPanelOptions() });
   _newsList;
 
   constructor() {
+    this.render();
+    this._searchPanel = new SearchPanel({ sources: this._sourcesConfig.getSearchPanelOptions() });
     this._searchPanel.submitClick.subscribe(this.onSubmitClick.bind(this));
+  }
+
+  render() {
+    const appEl = document.querySelector('app-root');
+    appEl.innerHTML = template;
+    return appEl;
   }
 
   onSubmitClick({ source, page }) {
