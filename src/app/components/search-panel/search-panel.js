@@ -1,13 +1,16 @@
-import { DOMHelper } from '../common/utls.js';
-import { EventEmitter } from '../common/event-emitter.js';
-import { handleError } from '../error-handling/error-handling.js';
+import { DOMHelper } from '../../common/utls.js';
+import { EventEmitter } from '../../common/event-emitter.js';
+import { handleError } from '../../error-handling/error-handling.js';
+import template from './search-panel.template.js';
 
 /** Gets search parameters and emits an event when a user clicks submit button */
 export class SearchPanel {
+  selector = 'app-search-panel';
   _submitClick = new EventEmitter();
   _sourcesConfig;
   
   constructor({ sources = [] } = {}) {
+    this.render();
     this._pageEl = document.getElementById('page');
     this._pageElContainer = document.getElementById('pageContainer');
     this._sourceEl = document.getElementById('source');
@@ -16,6 +19,13 @@ export class SearchPanel {
     this._initSourceOptions(this._sourceEl, sources);
     this._submitButton.addEventListener('click', this._onSubmitClick.bind(this));
     this.enableSubmit();
+  }
+
+  render() {
+    // TODO: get the element to attach to from parent view
+    const el = document.querySelector(this.selector);
+    el.innerHTML = template;
+    return el;
   }
 
   get page() {

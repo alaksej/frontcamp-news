@@ -1,11 +1,12 @@
 import { SourcesConfig, apiKey } from './config/config.js';
 import { NewsAPI } from './services/news-api.js';
-import { SearchPanel } from './components/search-panel.js';
+import { SearchPanel } from './components/search-panel/search-panel.js';
 import { handleError } from './error-handling/error-handling.js';
 import template from './app.template.js';
 
 /** The main application class */
 export class App {
+  selector = 'app-root';
   _sourcesConfig = new SourcesConfig();
   _newsApi = new NewsAPI(apiKey);
   _newsList;
@@ -17,7 +18,7 @@ export class App {
   }
 
   render() {
-    const appEl = document.querySelector('app-root');
+    const appEl = document.querySelector(this.selector);
     appEl.innerHTML = template;
     return appEl;
   }
