@@ -1,12 +1,12 @@
 import { handleError } from "../error-handling/error-handling";
-import { HttpClient } from "../common/http/http-client";
+import { HttpClientProxy } from "../common/http/http-client.proxy";
 
 const host = 'https://newsapi.org';
 const apiVersion = 'v2';
 
 /** Fetches the news data from the web */
 export class NewsAPI {
-  _httpClient = new HttpClient();
+  _httpClient = new HttpClientProxy();
 
   constructor(apiKey) {
     if (!apiKey) throw new Error('No API key specified');

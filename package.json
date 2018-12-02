@@ -56,6 +56,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "mdn-polyfills": "^5.13.0",
+    "proxy-polyfill": "^0.3.0",
     "whatwg-fetch": "^3.0.0"
   }
 }
