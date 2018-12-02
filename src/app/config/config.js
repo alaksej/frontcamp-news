@@ -5,6 +5,14 @@ export const apiKey = 'd63e3d1d1622450aaf814fae749afce1';
 export const genericNewsLogoPath = logoPath;
 
 export class SourcesConfig {
+  constructor() {
+    if (typeof SourcesConfig.instance !== 'object') {
+      SourcesConfig.instance = this;
+    }
+
+    return SourcesConfig.instance;
+  }
+  
   _sourcesConfig = new Map([
     ['1', { displayName: 'Top headlines from BBC News', urlConfig: { endpoint: 'top-headlines', params: { sources: 'bbc-news' } }, isPaginationHidden: true }],
     ['2', { displayName: 'Articles about Bitcoin', urlConfig: { endpoint: 'everything', params: { q: 'bitcoin' } } }],

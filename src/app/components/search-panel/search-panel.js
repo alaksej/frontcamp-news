@@ -1,24 +1,26 @@
 import { DOMHelper } from '../../common/utls.js';
-import { EventEmitter } from '../../common/event-emitter.js';
 import { handleError } from '../../error-handling/error-handling.js';
 import template from './search-panel.template.js';
+import { SearchPanelController } from './search-panel.controller.js';
+import { SourcesConfig } from '../../config/config.js';
 
 /** Gets search parameters and emits an event when a user clicks submit button */
 export class SearchPanel {
   selector = 'app-search-panel';
-  _submitClick = new EventEmitter();
-  _sourcesConfig;
-  
-  constructor({ sources = [] } = {}) {
+  _searchPanelOptions = new SourcesConfig().getSearchPanelOptions();
+
+  constructor(model) {
+    this._model = model;
+    this._controller = new SearchPanelController(model);
     this.render();
+
     this._pageEl = document.getElementById('page');
     this._pageElContainer = document.getElementById('pageContainer');
     this._sourceEl = document.getElementById('source');
     this._submitButton = document.getElementById('submit');
-    this._sourcesConfig = sources;
-    this._initSourceOptions(this._sourceEl, sources);
+    this._initSourceOptions(this._sourceEl, this._searchPanelOptions);
     this._submitButton.addEventListener('click', this._onSubmitClick.bind(this));
-    this.enableSubmit();
+    model.isLoading ? this._disableSubmit() : this._enableSubmit();
   }
 
   render() {
@@ -42,19 +44,15 @@ export class SearchPanel {
     return this._sourceEl.value;
   }
 
-  get submitClick() {
-    return this._submitClick;
-  }
-
   dispose() {
     this._pageEl.removeEventListener('click', this._onSubmitClick.bind(this));
   }
 
-  disableSubmit() {
+  _disableSubmit() {
     this._submitButton.setAttribute('disabled', '');
   }
 
-  enableSubmit() {
+  _enableSubmit() {
     this._submitButton.removeAttribute('disabled');
   }
 
@@ -70,7 +68,7 @@ export class SearchPanel {
   }
 
   get _isPaginationHidden() {
-    return this._sourcesConfig.find(s => s.value === this.source).isPaginationHidden;
+    return this._searchPanelOptions.find(s => s.value === this.source).isPaginationHidden;
   }
 
   _setPageVisible() {
@@ -90,6 +88,6 @@ export class SearchPanel {
   }
 
   _onSubmitClick() {
-    this.submitClick.emit({ source: this.source, page: this.page });
+    this._controller.onSubmitClick({ source: this.source, page: this.page });
   }
 }
