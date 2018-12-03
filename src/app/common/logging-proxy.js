@@ -1,7 +1,7 @@
-import { HttpClient } from './http-client.js';
+import { HttpClient } from './http/http-client.js';
 
-export class HttpClientProxy {
-  constructor() {
+export class LoggingProxy {
+  constructor(obj, logger) {
     const handlers = {
       get(target, key, context) {
         const propertyValue = target[key];
@@ -9,19 +9,21 @@ export class HttpClientProxy {
         /** IE fix: without this check, app breaks in IE. 
          * With it the requests are not logged but at least 
          * all other features work.
-         * Is it because of partial Proxy polyfilling? */
+         * Is it because of partial Proxy polyfilling? 
+         * TODO: figure out how to make it work in IE
+         * */
         if (typeof propertyValue !== 'function') {
           return propertyValue;
         }
 
         return function (...args) {
-          console.info(`${key} ${JSON.stringify(args)}`);
+          logger.log(`${key} ${JSON.stringify(args)}`);
           return propertyValue.apply(target, args);
         };
       },
 
     };
-    const pobj = new Proxy(new HttpClient(), handlers);
+    const pobj = new Proxy(obj, handlers);
     return pobj;
   }
 }
