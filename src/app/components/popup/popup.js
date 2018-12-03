@@ -27,7 +27,7 @@ export class Popup {
         <h3 class="title">${title}</h3>
         <p class="message">${message}</p>
       </div>
-      <a href="javascript:void(0);" class="close"></a>
+      <button class="close"></button>
     `;
     this.hide();
     container
