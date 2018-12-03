@@ -1,5 +1,5 @@
 import { SearchPanel } from './components/search-panel/search-panel.js';
-import template from './app.template.js';
+import template from './app.html';
 import { AppModel } from './app.model.js';
 import { getClassAsync } from './core/class-loader.js';
 

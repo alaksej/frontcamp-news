@@ -1,6 +1,6 @@
 import { DOMHelper } from '../../common/utls.js';
 import { handleError } from '../../error-handling/error-handling.js';
-import template from './search-panel.template.js';
+import template from './search-panel.html';
 import { SearchPanelController } from './search-panel.controller.js';
 import { SourcesConfig } from '../../config/config.js';
 
