@@ -6,28 +6,32 @@ import { SourcesConfig } from '../../config/config.js';
 
 /** Gets search parameters and emits an event when a user clicks submit button */
 export class SearchPanel {
-  selector = 'app-search-panel';
+  static selector = 'app-search-panel';
   _searchPanelOptions = new SourcesConfig().getSearchPanelOptions();
 
-  constructor(model) {
-    this._model = model;
+  constructor(model, hostEl) {
+    this._hostEl = hostEl;
     this._controller = new SearchPanelController(model);
-    this.render();
+    this.render(hostEl);
 
-    this._pageEl = document.getElementById('page');
-    this._pageElContainer = document.getElementById('pageContainer');
-    this._sourceEl = document.getElementById('source');
-    this._submitButton = document.getElementById('submit');
+    this._pageEl = hostEl.querySelector('#page');
+    this._pageElContainer = hostEl.querySelector('#pageContainer');
+    this._sourceEl = hostEl.querySelector('#source');
+    this._submitButton = hostEl.querySelector('#submit');
     this._initSourceOptions(this._sourceEl, this._searchPanelOptions);
     this._submitButton.addEventListener('click', this._onSubmitClick.bind(this));
-    model.isLoading ? this._disableSubmit() : this._enableSubmit();
+    this.update(model.value);
+    model.change.subscribe(value => this.update(value));
   }
 
-  render() {
-    // TODO: get the element to attach to from parent view
-    const el = document.querySelector(this.selector);
-    el.innerHTML = template;
-    return el;
+  render(hostEl) {
+    hostEl.innerHTML = template;
+  }
+
+  update(appModelValue) {
+    appModelValue.isLoading ? this._disableSubmit() : this._enableSubmit();
+    this.page = appModelValue.searchPanel.page;
+    this.source = appModelValue.searchPanel.source;
   }
 
   get page() {
@@ -40,8 +44,17 @@ export class SearchPanel {
     return page;
   }
 
+  set page(value) {
+    this._pageEl.value = value;
+  }
+
   get source() {
     return this._sourceEl.value;
+  }
+
+  set source(value) {
+    this._sourceEl.value = value;
+    this._sourceEl.dispatchEvent(new Event('change'));
   }
 
   dispose() {

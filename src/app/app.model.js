@@ -3,22 +3,22 @@ import { EventEmitter } from "./common/event-emitter";
 export class AppModel {
   change = new EventEmitter();
 
-  searchPanel = { source: '', page: 1 };
-  isLoading = false;
-  articles = [];
-
-  setPage(value) {
-    this.searchPanel.page = value;
-    this.change.emit(this);
+  get value() {
+    return this._value;
   }
 
-  setIsLoading(value) {
-    this.isLoading = value;
-    this.change.emit(this);
-  }
+  _value = {
+    searchPanel: { source: '2', page: 1 },
+    isLoading: false,
+    newsList: {
+      articles: [],
+      showText: true,
+      text: ``,
+    }
+  };
 
-  setArticles(articles) {
-    this.articles = articles;
-    this.change.emit(this);
+  patch(partial) {
+    this._value = { ...this._value, ...partial };
+    this.change.emit(this._value);
   }
 }

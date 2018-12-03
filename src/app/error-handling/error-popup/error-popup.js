@@ -1,7 +1,7 @@
 import './error-popup.scss';
 import { Popup } from '../../components/popup/popup.js';
 
-export class ErrorPopup {
+export default class ErrorPopup {
   constructor() {
     /* Singleton */
     if (typeof ErrorPopup.instance === 'object') {

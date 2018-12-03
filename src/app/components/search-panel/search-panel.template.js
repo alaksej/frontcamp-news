@@ -10,7 +10,7 @@ export default `
   <div id="pageContainer" class="form-group row" title="Enter the page number" hidden>
     <label class="col-1" for="page">Page:</label>
     <div class="col-5">
-      <input class="form-control" type="number" name="page" id="page" value="1" placeholder="Enter the page number">
+      <input class="form-control" type="number" name="page" id="page" placeholder="Enter the page number">
     </div>
   </div>
   <div class="row">

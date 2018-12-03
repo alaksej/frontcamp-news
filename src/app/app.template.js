@@ -9,7 +9,7 @@ export default `
   <div class="content-wrapper">
     <h2 class="welcome-title">Welcome to Worldwide News!</h2>
     <app-search-panel></app-search-panel>
-    <section class="card-list" id="newsListContainer">Click Go to get some news</section>
+    <app-news-list></app-news-list>
   </div>
 </main>
 
