@@ -6,15 +6,15 @@ export class HttpRequest {
   body;
 
   get urlWithParams() {
-    return this._getUrlWithParams(this.url, this.queryParams);
-  }
-  
-  _getUrlWithParams(url, params) {
-    if (!params) {
-      return url;
+    if (!this.queryParams) {
+      return this.url;
     }
 
-    const queryParams = Object.keys(params).map(key => `${key}=${params[key]}`).join('&');
-    return `${url}?${queryParams}`;
+    const queryString = Object.keys(this.queryParams).map(key => `${key}=${this.queryParams[key]}`).join('&');
+    return `${this.url}?${queryString}`;
+  }
+
+  constructor(init) {
+    Object.assign(this, init);
   }
 }

@@ -8,7 +8,7 @@ export class AppModel {
   }
 
   _value = {
-    searchPanel: { source: '2', page: 1 },
+    searchPanel: { source: '1', page: 1 },
     isLoading: false,
     newsList: {
       articles: [],
