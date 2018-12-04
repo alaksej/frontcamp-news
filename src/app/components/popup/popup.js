@@ -1,11 +1,11 @@
 import './popup.scss';
 
 export class Popup {
-  constructor({ container = document.querySelector('.popup-container'), title, message, colorClass, autohideTimeMs = -1 } = {}) {
+  constructor({ title, message, colorClass, autohideTimeMs = -1 } = {}, container = document.querySelector('.popup-container')) {
     this._init({ container, title, message, colorClass });
+    this._autohideTimeMs = autohideTimeMs;
     this._closeBtn = this._popup.querySelector('.close');
     this._closeBtn.addEventListener('click', () => this.hide());
-    this._autohideTimeMs = autohideTimeMs;
     this._titleEl = this._popup.querySelector('.title');
     this._messageEl = this._popup.querySelector('.message');
   }
