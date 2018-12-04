@@ -9,10 +9,8 @@ export default class NewsList {
   constructor(model, hostEl) {
     this._hostEl = hostEl;
     this._hostEl.classList.add('card-list');
-    model.change.subscribe(modelValue => {
-      this.update(modelValue);
-    })
     this.update(model.value);
+    model.change.subscribe(modelValue =>  this.update(modelValue));
   }
 
   update(appModelValue) {

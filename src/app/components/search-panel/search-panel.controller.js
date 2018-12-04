@@ -9,9 +9,17 @@ export class SearchPanelController {
     this._model = model;
   }
 
-  onSubmitClick({ source, page }) {
-    const { endpoint, params } = this._sourcesConfig.getUrlConfig(source);
-    this.loadNews(endpoint, { ...params, page });
+  onSourceChange(sourceId) {
+    this._model.patch({ searchPanel: { sourceId, isPaginationHidden: this._sourcesConfig.getIsPaginationHidden(sourceId) } });
+  }
+
+  onPageChange(page) {
+    this._model.patch({ searchPanel: { page } });
+  }
+
+  onSubmitClick() {
+    const { endpoint, params } = this._sourcesConfig.getUrlConfig(this._model.value.searchPanel.sourceId);
+    this.loadNews(endpoint, { ...params, page: this._model.value.searchPanel.page });
   }
 
   async loadNews(endpoint, params) {

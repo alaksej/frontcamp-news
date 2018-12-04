@@ -6,13 +6,9 @@ export const genericNewsLogoPath = logoPath;
 
 export class SourcesConfig {
   constructor() {
-    if (typeof SourcesConfig.instance !== 'object') {
-      SourcesConfig.instance = this;
-    }
-
-    return SourcesConfig.instance;
+    return SourcesConfig.instance || (SourcesConfig.instance = this);
   }
-  
+
   _sourcesConfig = new Map([
     ['1', { displayName: 'Top headlines from BBC News', urlConfig: { endpoint: 'top-headlines', params: { sources: 'bbc-news' } }, isPaginationHidden: true }],
     ['2', { displayName: 'Articles about Bitcoin', urlConfig: { endpoint: 'everything', params: { q: 'bitcoin' } } }],
@@ -20,10 +16,14 @@ export class SourcesConfig {
   ]);
 
   getSearchPanelOptions() {
-    return Array.from(this._sourcesConfig, source => ({ value: source[0], displayName: source[1].displayName, isPaginationHidden: source[1].isPaginationHidden }));
+    return Array.from(this._sourcesConfig, source => ({ sourceId: source[0], displayName: source[1].displayName }));
   }
 
-  getUrlConfig(sourceKey) {
-    return this._sourcesConfig.get(sourceKey).urlConfig;
+  getUrlConfig(sourceId) {
+    return this._sourcesConfig.get(sourceId).urlConfig;
+  }
+
+  getIsPaginationHidden(sourceId) {
+    return this._sourcesConfig.get(sourceId).isPaginationHidden;
   }
 }

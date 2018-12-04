@@ -7,31 +7,31 @@ import { SourcesConfig } from '../../config/config.js';
 /** Gets search parameters and emits an event when a user clicks submit button */
 export class SearchPanel {
   static selector = 'app-search-panel';
-  _searchPanelOptions = new SourcesConfig().getSearchPanelOptions();
 
   constructor(model, hostEl) {
-    this._hostEl = hostEl;
+    hostEl.innerHTML = template;
     this._controller = new SearchPanelController(model);
-    this.render(hostEl);
 
     this._pageEl = hostEl.querySelector('#page');
     this._pageElContainer = hostEl.querySelector('#pageContainer');
+    this._pageEl.addEventListener('change', () => this._controller.onPageChange(this.page));
+
     this._sourceEl = hostEl.querySelector('#source');
+    this._initSourceOptions(this._sourceEl, new SourcesConfig().getSearchPanelOptions());
+    this._sourceEl.addEventListener('change', () => this._controller.onSourceChange(this._sourceEl.value));
+
     this._submitButton = hostEl.querySelector('#submit');
-    this._initSourceOptions(this._sourceEl, this._searchPanelOptions);
-    this._submitButton.addEventListener('click', this._onSubmitClick.bind(this));
+    this._submitButton.addEventListener('click', () => this._controller.onSubmitClick());
+
     this.update(model.value);
     model.change.subscribe(value => this.update(value));
   }
 
-  render(hostEl) {
-    hostEl.innerHTML = template;
-  }
-
   update(appModelValue) {
-    appModelValue.isLoading ? this._disableSubmit() : this._enableSubmit();
-    this.page = appModelValue.searchPanel.page;
-    this.source = appModelValue.searchPanel.source;
+    this._pageEl.value = appModelValue.searchPanel.page;
+    this._sourceEl.value = appModelValue.searchPanel.sourceId;
+    this._setPageVisibility(appModelValue.searchPanel.isPaginationHidden);
+    this._setButtonEnabledState(!appModelValue.isLoading);
   }
 
   get page() {
@@ -44,63 +44,15 @@ export class SearchPanel {
     return page;
   }
 
-  set page(value) {
-    this._pageEl.value = value;
-  }
-
-  get source() {
-    return this._sourceEl.value;
-  }
-
-  set source(value) {
-    this._sourceEl.value = value;
-    this._sourceEl.dispatchEvent(new Event('change'));
-  }
-
-  dispose() {
-    this._pageEl.removeEventListener('click', this._onSubmitClick.bind(this));
-  }
-
-  _disableSubmit() {
-    this._submitButton.setAttribute('disabled', '');
-  }
-
-  _enableSubmit() {
-    this._submitButton.removeAttribute('disabled');
-  }
-
   _initSourceOptions(sourceEl, sources) {
-    if (!sourceEl) {
-      throw new Error('Unable to find the source element');
-    }
-
-    DOMHelper.removeAllChildren(sourceEl);
-    sourceEl.innerHTML = sources.map(source => this._createOption(source)).join('');
-    this._setPageVisible();
-    sourceEl.addEventListener('change', () => this._setPageVisible());
+    sourceEl.innerHTML = sources.reduce((result, { displayName, sourceId }) => result + `<option value="${sourceId}">${displayName}</option>`, '');
   }
 
-  get _isPaginationHidden() {
-    return this._searchPanelOptions.find(s => s.value === this.source).isPaginationHidden;
+  _setPageVisibility(isPaginationHidden) {
+    isPaginationHidden ? this._pageElContainer.setAttribute('hidden', '') : this._pageElContainer.removeAttribute('hidden');
   }
 
-  _setPageVisible() {
-    this._isPaginationHidden ? this._hidePage() : this._showPage();
-  }
-
-  _hidePage() {
-    this._pageElContainer.setAttribute('hidden', '');
-  }
-
-  _showPage() {
-    this._pageElContainer.removeAttribute('hidden');
-  }
-
-  _createOption({ displayName, value }) {
-    return `<option value="${value}">${displayName}</option>`;
-  }
-
-  _onSubmitClick() {
-    this._controller.onSubmitClick({ source: this.source, page: this.page });
+  _setButtonEnabledState(isEnabled) {
+    isEnabled ? this._submitButton.removeAttribute('disabled') : this._submitButton.setAttribute('disabled', '');
   }
 }

@@ -8,7 +8,7 @@ export class AppModel {
   }
 
   _value = {
-    searchPanel: { source: '1', page: 1 },
+    searchPanel: { sourceId: '1', page: 1, isPaginationHidden: true },
     isLoading: false,
     newsList: {
       articles: [],
@@ -18,7 +18,9 @@ export class AppModel {
   };
 
   patch(partial) {
-    this._value = { ...this._value, ...partial };
+    const searchPanel = { ...this._value.searchPanel, ...partial.searchPanel };
+    const newsList = { ...this._value.newsList, ...partial.newsList };
+    this._value = { ...this._value, ...partial, searchPanel, newsList };
     this.change.emit(this._value);
   }
 }
