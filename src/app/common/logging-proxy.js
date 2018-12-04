@@ -1,5 +1,3 @@
-import { HttpClient } from './http/http-client.js';
-
 export class LoggingProxy {
   constructor(obj, logger) {
     const handlers = {
