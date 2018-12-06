@@ -1,42 +1,28 @@
-import { SourcesConfig, apiKey } from './config/config.js';
-import { NewsAPI } from './services/news-api.js';
-import { SearchPanel } from './components/search-panel.js';
+import { SearchPanel } from './components/search-panel/search-panel.js';
+import template from './app.html';
+import { AppModel } from './app.model.js';
+import { getClassAsync } from './core/class-loader.js';
 
 /** The main application class */
 export class App {
-  _sourcesConfig = new SourcesConfig();
-  _newsApi = new NewsAPI(apiKey);
-  _searchPanel = new SearchPanel({ sources: this._sourcesConfig.getSearchPanelOptions() });
-  _newsList;
+  selector = 'app-root';
+  _model = new AppModel();
 
   constructor() {
-    this._searchPanel.submitClick.subscribe(this.onSubmitClick.bind(this));
+    this._hostEl = document.querySelector(this.selector);
+    this.render(this._hostEl);
+    this._searchPanel = new SearchPanel(this._model, this._hostEl.querySelector(SearchPanel.selector));
+    this._subscription = this._model.change.subscribe(modelValue => {
+      if (!this._newsList && modelValue.isLoading) {
+        getClassAsync('NewsList').then(NewsList => {
+          this._newsList = new NewsList(this._model, this._hostEl.querySelector(NewsList.selector));
+          this._subscription.unsubscribe();
+        });
+      }
+    });
   }
 
-  onSubmitClick({ source, page }) {
-    const { endpoint, params } = this._sourcesConfig.getUrlConfig(source);
-    this.loadNews(endpoint, { ...params, page });
-  }
-
-  async loadNews(endpoint, params) {
-    if (!this._newsList) {
-      const { default: NewsList } = await import(/* webpackChunkName: "newslist" */ './components/news-list/news-list.js');
-      this._newsList = new NewsList(document.getElementById('newsListContainer'));
-    }
-
-    this._searchPanel.disableSubmit();
-    this._newsList.text = 'Loading...';
-
-    try {
-      const result = await this._newsApi.get(endpoint, params);
-      result && result.articles && result.articles.length
-        ? this._newsList.articles = result.articles
-        : this._newsList.text = `Nothing's found. Try changing the channel or page number.`;
-    } catch (e) {
-      console.log(e);
-      this._newsList.text = 'Oops, something went wrong. Maybe the page number is too big?';
-    } finally {
-      this._searchPanel.enableSubmit();
-    }
+  render(hostEl) {
+    hostEl.innerHTML = template;
   }
 }

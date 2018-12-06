@@ -46,6 +46,7 @@
     "node-sass": "^4.10.0",
     "postcss-loader": "^3.0.0",
     "precss": "^4.0.0",
+    "raw-loader": "^0.5.1",
     "sass-loader": "^7.1.0",
     "schema-utils": "^1.0.0",
     "style-loader": "^0.23.1",
@@ -56,6 +57,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "mdn-polyfills": "^5.13.0",
+    "proxy-polyfill": "^0.3.0",
     "whatwg-fetch": "^3.0.0"
   }
 }

@@ -1,19 +1,33 @@
-import { DOMHelper, isIterable } from '../../core/utls.js';
+import { DOMHelper, isIterable } from '../../common/utls.js';
 import { genericNewsLogoPath } from '../../config/config.js';
 import './news-list.scss';
 
 /** Displays the list of the news articles */
 export default class NewsList {
-  _newsListContainer;
+  static selector = 'app-news-list';
 
-  constructor(containerEl) {
-    this._newsListContainer = containerEl;
-    this.text = `Click 'Go' to get some news!`;
+  constructor(model, hostEl) {
+    this._hostEl = hostEl;
+    this._hostEl.classList.add('card-list');
+    this.update(model.value);
+    model.change.subscribe(modelValue =>  this.update(modelValue));
+  }
+
+  update(appModelValue) {
+    if (appModelValue.newsList.showText) {
+      this.text = appModelValue.newsList.text;
+    } else {
+      this.articles = appModelValue.newsList.articles;
+    }
+
+    if (appModelValue.isLoading) {
+      this.text = 'Loading...';
+    }
   }
 
   set text(text) {
     this.clear();
-    this._newsListContainer.append(text);
+    this._hostEl.append(text);
   }
 
   set articles(articles) {
@@ -22,12 +36,12 @@ export default class NewsList {
   }
 
   clear() {
-    DOMHelper.removeAllChildren(this._newsListContainer);
+    DOMHelper.removeAllChildren(this._hostEl);
   }
 
   add(articles) {
     if (isIterable(articles)) {
-      this._newsListContainer.innerHTML = Array.from(articles, article => this._createCardEl(article)).join('');
+      this._hostEl.innerHTML = Array.from(articles, article => this._createCardEl(article)).join('');
     }
     Array.from(document.querySelectorAll('.card-image img')).forEach(image => image.onload = () => image.parentElement.classList.remove('loading'));
   }
@@ -52,5 +66,5 @@ export default class NewsList {
         </a>
       </div>
     `;
-    }
+  }
 }

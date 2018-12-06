@@ -53,7 +53,7 @@ const configureBabelLoader = ({ browsers, useBuiltIns = false }) => {
   };
 };
 
-const configureStylesLoader = isProd => {
+const configureStylesLoader = () => {
   return {
     test: /\.scss$/,
     use: [
@@ -81,7 +81,17 @@ const configureImageLoader = isProd => ({
   ]
 });
 
-const configureCustomJsonLoader = isProd => ({
+const configureHtmlTemplateLoader = () => ({
+  test: /\.html$/,
+  include: [
+    path.resolve(__dirname, './src/app'),
+  ],
+  use: [
+    'raw-loader',
+  ]
+});
+
+const configureCustomJsonLoader = () => ({
   test: /custom-loader-test\.json$/,
   use: [
     {
@@ -126,9 +136,10 @@ const getModernConfig = isProd => ({
           'last 2 Edge versions', 'not Edge < 15',
         ]
       }),
-      configureStylesLoader(isProd),
+      configureStylesLoader(),
       configureImageLoader(isProd),
-      configureCustomJsonLoader(isProd),
+      configureCustomJsonLoader(),
+      configureHtmlTemplateLoader(),
     ],
   },
 });
@@ -152,9 +163,10 @@ const getLegacyConfig = isProd => ({
         ],
         useBuiltIns: 'usage',
       }),
-      configureStylesLoader(isProd),
+      configureStylesLoader(),
       configureImageLoader(isProd),
-      // configureCustomJsonLoader(isProd),
+      configureCustomJsonLoader(),
+      configureHtmlTemplateLoader(),
     ],
   },
 });

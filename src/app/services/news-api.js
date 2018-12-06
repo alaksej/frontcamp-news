@@ -1,31 +1,42 @@
+import { handleError } from "../error-handling/error-handling";
+import { LoggingProxy } from "../common/logging-proxy";
+import { HttpClient } from "../common/http/http-client";
+import { ConsoleLogger } from "../common/console-logger";
+
 const host = 'https://newsapi.org';
+const apiVersion = 'v2';
 
 /** Fetches the news data from the web */
 export class NewsAPI {
-  _apiKey;
-  
+  _httpClient = new LoggingProxy(new HttpClient(), new ConsoleLogger());
+
   constructor(apiKey) {
     if (!apiKey) throw new Error('No API key specified');
-    this._apiKey = apiKey;
+    this._headers = { 'x-api-key': apiKey };
   }
 
-  async get(endpoint, params) {
-    const url = this._buildUrl(`/v2/${endpoint}`, params);
-    return await this._getDataFromWeb(url, this._apiKey);
+  get(endpoint, queryParams) {
+    return this._getDataFromWeb(this._buildUrl(endpoint), queryParams);
   }
 
-  _buildUrl(endpoint, params) {
-    const queryParams = Object.keys(params).map(key => `${key}=${params[key]}`).join('&');
-    const baseURL = `${host}${endpoint}`;
-    return queryParams ? `${baseURL}?${queryParams}` : baseURL;
+  _buildUrl(endpoint) {
+    return `${host}/${apiVersion}/${endpoint}`;
   }
 
-  async _getDataFromWeb(url, apiKey) {
-    const headers = apiKey ? { 'x-api-key': apiKey } : {};
-    const response = await fetch(url, { headers });
+  async _getDataFromWeb(url, queryParams) {
+    let response;
+    try {
+      response = await this._httpClient.get(url, { headers: this._headers, queryParams });
+    } catch (e) {
+      handleError('Network error.');
+      console.error(e);
+      return;
+    }
+
     const body = await response.json();
     if (body.status === 'error') {
-      throw new NewsAPIError(body);
+      const error = new NewsAPIError(body);
+      throw error;
     }
     return body;
   }

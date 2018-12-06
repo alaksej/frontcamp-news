@@ -21,6 +21,8 @@
   --color-secondary-2-2: #ff9200;
   --color-secondary-2-3: #ff9200;
   --color-secondary-2-4: #f38b00;
+
+  --color-error-1: #ff3500;
 }
 
 * {
@@ -294,4 +296,12 @@ main {
   100% {
     background: hsl(200, 25%, 96%);
   }
+}
+
+.popup-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
